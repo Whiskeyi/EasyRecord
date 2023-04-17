@@ -1,0 +1,35 @@
+.tabs-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+
+  .tab-item {
+    padding: 0 40px;
+    color: #999;
+    font-size: 34px;
+    font-weight: 500;
+
+    &.choose {
+      position: relative;
+      font-size: 36px;
+      color: #000;
+      font-weight: 500;
+
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -6px;
+        width: 48px;
+        height: 4px;
+        border-radius: 2px;
+        margin: auto;
+        background: #73d1a1;
+        transition: all 0.3s ease-in-out;
+      }
+    }
+  }
+}

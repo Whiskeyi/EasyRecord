@@ -58,8 +58,8 @@ const config = {
           generateScopedName: '[name]__[local]___[hash:base64:5]'
         }
       }
-    }
-  }
+    },
+  },
 }
 
 module.exports = function (merge) {

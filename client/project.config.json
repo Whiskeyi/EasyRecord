@@ -2,7 +2,7 @@
   "miniprogramRoot": "dist/",
   "projectname": "easy-record",
   "description": "易记-基于云开发记忆推送都个人记账系统",
-  "appid": "touristappid",
+  "appid": "wx255405342bc42801",
   "setting": {
     "urlCheck": true,
     "es6": false,
@@ -12,7 +12,8 @@
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
-    }
+    },
+    "condition": false
   },
   "compileType": "miniprogram",
   "libVersion": "2.31.0",
