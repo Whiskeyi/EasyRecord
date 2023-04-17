@@ -1,0 +1,124 @@
+.day-card-container {
+  width: 100%;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  background-color: #fff;
+
+  .card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 12px 12px 0 0;
+    padding: 0 24px;
+    height: 130px;
+    background-color: #fbfafa;
+
+    .header-date {
+      display: flex;
+      flex-direction: row;
+
+      .header-date-time {
+        font-size: 34px;
+      }
+
+      .header-date-title {
+        margin-left: 12px;
+        font-size: 34px;
+      }
+    }
+
+    .header-money-container {
+      display: flex;
+      flex-direction: row;
+
+      > .header-money:not(:last-child) {
+        margin-right: 24px;
+      }
+
+      .header-money {
+        display: flex;
+        flex-direction: row;
+
+        .header-money-title {
+          padding: 2px 4px;
+          font-size: 26px;
+          background-color: #eee;
+          color: gray;
+          border-radius: 8px;
+        }
+
+        .header-money-amount {
+          margin-left: 12px;
+           font-size: 28px;
+        }
+      }
+    }
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+
+    > view:not(:last-child) {
+      border-bottom: #fafafa 1px solid;
+    }
+  }
+
+  .content-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px;
+
+    .item-left {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .item-img {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+    }
+  }
+
+  .item-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 32px;
+
+    .info-title {
+      font-size: 30px;
+      margin-top: 4px;
+    }
+
+    .info-detail {
+      display: flex;
+      flex-direction: row;
+      font-size: 26px;
+      color: #aaa;
+
+      .info-time {
+        margin-right: 24px;
+      }
+
+      .info-desc {
+        position: relative;
+
+        &::before {
+          position: absolute;
+          content: '';
+          width: 1px;
+          height: 18px;
+          background-color: gray;
+          opacity: 0.2;
+          top: 10px;
+          left: -12px;
+        }
+      }
+    }
+  }
+}

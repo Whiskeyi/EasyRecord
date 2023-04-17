@@ -2,7 +2,6 @@ export default defineAppConfig({
   pages: [
     'pages/index/index',
     'pages/my/index',
-    'pages/statistics/index',
     'pages/add/index',
   ],
   window: {
