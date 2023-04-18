@@ -26,7 +26,7 @@ const Index = () => {
         tabValue={activeTab}
         onChange={(value) => setActiveTab(value)}
       />
-      <View className='index-content'>
+      <View className="index-content">
         {activeTab === '1' && <Detail />}
         {activeTab === '2' && <Statistics />}
       </View>

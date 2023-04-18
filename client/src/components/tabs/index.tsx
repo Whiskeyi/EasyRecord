@@ -28,7 +28,7 @@ const Tabs: FC<ITabsProps> = ({
   }
 
   return (
-    <View style={style} className='tabs-container'>
+    <View style={style} className="tabs-container">
       {configTabs?.map((item) => {
         return (
           <View

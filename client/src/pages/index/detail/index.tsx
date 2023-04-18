@@ -7,9 +7,9 @@ import './index.less'
 
 const Detail = () => {
   return (
-    <View className='detail-container'>
+    <View className="detail-container">
       <DetailHeader />
-      <View className='detail-content'>
+      <View className="detail-content">
         <DayCard />
         <DayCard />
       </View>

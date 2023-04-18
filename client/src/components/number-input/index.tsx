@@ -23,13 +23,10 @@ function NumberInput() {
   };
 
   return (
-    <View className='number-input'>
+    <View className="number-input">
       <Input
-        type='text'
+        type="text"
         value={value}
-        // onChange={handleInputChange}
-        // onKeyPress={handleKeyPress}
-        // onFocus={(e) => e.target.select()}
       />
       <Button onClick={handleDeleteClick}>删除</Button>
       <Button onClick={handleConfirmClick}>确定</Button>
