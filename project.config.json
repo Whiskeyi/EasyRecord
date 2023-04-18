@@ -1,24 +1,32 @@
 {
-  "appid": "touristappid",
+  "miniprogramRoot": "client/dist/",
   "projectname": "easy-record",
-  "compileType": "miniprogram",
-  "libVersion": "2.31.0",
-  "miniprogramRoot": "dist/",
-  "srcMiniprogramRoot": "dist/",
-  "packOptions": {
-    "ignore": [],
-    "include": []
-  },
+  "description": "易记-基于云开发记忆推送都个人记账系统",
+  "appid": "wx255405342bc42801",
   "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "postcss": false,
+    "minified": false,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
-    }
+    },
+    "condition": false
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.31.0",
+  "srcMiniprogramRoot": "client/dist/",
+  "cloudfunctionRoot": "cloud/functions/",
+  "packOptions": {
+    "ignore": [],
+    "include": []
   },
   "condition": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
-  }
+  },
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/"
 }

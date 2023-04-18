@@ -52,7 +52,7 @@ const My = () => {
       <View className="self-info">
         <Image className="avatar-img" src="https://cloud.zhuchj.com/avatar.jpg" />
         <View className="self-name">Whiskeyi</View>
-        <View className="self-intro">Stay Happy</View>
+        <View className="self-intro">stay happy~</View>
         <View className="self-data">
           {renderSelfData([
             {
@@ -79,14 +79,17 @@ const My = () => {
             title: '分类管理'
           },
           {
-            title: '记账日报'
-          },
-          {
-            title: '记账周报'
-          },
-          {
             title: '消息推送'
           },
+          {
+            title: '关于我们'
+          },
+          {
+            title: '意见反馈'
+          },
+          {
+            title: '退出登录'
+          }
         ])}
         </View>
     </View>

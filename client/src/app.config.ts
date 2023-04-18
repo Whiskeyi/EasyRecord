@@ -1,5 +1,6 @@
 export default defineAppConfig({
   pages: [
+    'pages/login/index',
     'pages/index/index',
     'pages/my/index',
     'pages/add/index',
@@ -35,5 +36,6 @@ export default defineAppConfig({
         text: '我的'
       }
     ]
-  }
+  },
+  cloud: true
 })
