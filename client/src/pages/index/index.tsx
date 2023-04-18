@@ -3,7 +3,7 @@ import { View, Text } from '@tarojs/components'
 
 import Detail from './detail'
 import Statistics from './statistics'
-import { Tabs } from '../../components'
+import { Tabs } from '@/components'
 
 import './index.less'
 

@@ -1,3 +1,5 @@
+import path from 'path'
+
 const config = {
   projectName: 'easy-record',
   date: '2023-4-17',
@@ -11,6 +13,9 @@ const config = {
   outputRoot: 'dist',
   plugins: [],
   defineConstants: {
+  },
+  alias: {
+    '@': path.resolve(__dirname, '..', 'src')
   },
   copy: {
     patterns: [
@@ -39,7 +44,7 @@ const config = {
           namingPattern: 'module', // 转换模式，取值为 global/module
           generateScopedName: '[name]__[local]___[hash:base64:5]'
         }
-      }
+      },
     }
   },
   h5: {

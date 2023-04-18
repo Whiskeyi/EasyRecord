@@ -33,6 +33,57 @@
     tslint "^6.1.3"
     utility-types "^3.10.0"
 
+"@antv/adjust@~0.2.5":
+  version "0.2.5"
+  resolved "https://registry.npmmirror.com/@antv/adjust/-/adjust-0.2.5.tgz#bb37bb4a0a87ca3f4b660848bc9ac07f02bcf5db"
+  integrity sha512-MfWZOkD9CqXRES6MBGRNe27Q577a72EIwyMnE29wIlPliFvJfWwsrONddpGU7lilMpVKecS3WAzOoip3RfPTRQ==
+  dependencies:
+    "@antv/util" "~2.0.0"
+    tslib "^1.10.0"
+
+"@antv/event-emitter@^0.1.2":
+  version "0.1.3"
+  resolved "https://registry.npmmirror.com/@antv/event-emitter/-/event-emitter-0.1.3.tgz#3e06323b9dcd55a3241ddc7c5458cfabd2095164"
+  integrity sha512-4ddpsiHN9Pd4UIlWuKVK1C4IiZIdbwQvy9i7DUSI3xNJ89FPUFt8lxDYj8GzzfdllV0NkJTRxnG+FvLk0llidg==
+
+"@antv/f2-graphic@^0.0.14":
+  version "0.0.14"
+  resolved "https://registry.npmmirror.com/@antv/f2-graphic/-/f2-graphic-0.0.14.tgz#8a26583ee4cea7abfeb14f66830aedf80b5b5d53"
+  integrity sha512-dFndFtvKTR5f7TpmQEdlx90z3HDA2O4BHaTlpMIJfFwwY2bM60KNs5l0pANyNImXxbpLl3mwbKe7RR4Vxsegrg==
+  dependencies:
+    "@antv/util" "~2.0.6"
+    "@babel/runtime" "^7.12.5"
+
+"@antv/f2@^4.0.44":
+  version "4.0.44"
+  resolved "https://registry.npmmirror.com/@antv/f2/-/f2-4.0.44.tgz#10d0ab57478056249f4c51b0b4ec53977c28c87e"
+  integrity sha512-eYNqAO4Kkw+sf1Gb1adi0RC89Iprm5s7W7O6mtshmwd07XwKZHMBnF2xADt+xR49pgnndxmOA7DBsH7zqfRSeg==
+  dependencies:
+    "@antv/adjust" "~0.2.5"
+    "@antv/event-emitter" "^0.1.2"
+    "@antv/f2-graphic" "^0.0.14"
+    "@antv/scale" "~0.3.3"
+    "@antv/util" "~2.0.6"
+    "@babel/runtime" "^7.12.5"
+    d3-cloud "~1.2.5"
+
+"@antv/scale@~0.3.3":
+  version "0.3.18"
+  resolved "https://registry.npmmirror.com/@antv/scale/-/scale-0.3.18.tgz#b911f431b3e0b9547b6a65f66d0d3fa295b5ef32"
+  integrity sha512-GHwE6Lo7S/Q5fgaLPaCsW+CH+3zl4aXpnN1skOiEY0Ue9/u+s2EySv6aDXYkAqs//i0uilMDD/0/4n8caX9U9w==
+  dependencies:
+    "@antv/util" "~2.0.3"
+    fecha "~4.2.0"
+    tslib "^2.0.0"
+
+"@antv/util@~2.0.0", "@antv/util@~2.0.3", "@antv/util@~2.0.6":
+  version "2.0.17"
+  resolved "https://registry.npmmirror.com/@antv/util/-/util-2.0.17.tgz#e8ef42aca7892815b229269f3dd10c6b3c7597a9"
+  integrity sha512-o6I9hi5CIUvLGDhth0RxNSFDRwXeywmt6ExR4+RmVAzIi48ps6HUy+svxOCayvrPBN37uE6TAc2KDofRo0nK9Q==
+  dependencies:
+    csstype "^3.0.8"
+    tslib "^2.0.3"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.18.6", "@babel/code-frame@^7.21.4", "@babel/code-frame@^7.8.3":
   version "7.21.4"
   resolved "https://registry.npmmirror.com/@babel/code-frame/-/code-frame-7.21.4.tgz#d0fa9e4413aca81f2b23b9442797bda1826edb39"
@@ -1199,7 +1250,7 @@
     core-js-pure "^3.25.1"
     regenerator-runtime "^0.13.11"
 
-"@babel/runtime@^7.14.5", "@babel/runtime@^7.7.6", "@babel/runtime@^7.7.7", "@babel/runtime@^7.8.4":
+"@babel/runtime@^7.12.5", "@babel/runtime@^7.14.5", "@babel/runtime@^7.7.6", "@babel/runtime@^7.7.7", "@babel/runtime@^7.8.4":
   version "7.21.0"
   resolved "https://registry.npmmirror.com/@babel/runtime/-/runtime-7.21.0.tgz#5b55c9d394e5fcf304909a8b00c07dc217b56673"
   integrity sha512-xwII0//EObnq89Ji5AKYQaRYiW/nZ3llSv29d49IuxPhKbtJoLP+9QUUZ4nVragQVtaVGeZrpB+ZtG/Pdy/POw==
@@ -4485,7 +4536,7 @@ cssstyle@^2.0.0:
   dependencies:
     cssom "~0.3.6"
 
-csstype@^3.0.2:
+csstype@^3.0.2, csstype@^3.0.8:
   version "3.1.2"
   resolved "https://registry.npmmirror.com/csstype/-/csstype-3.1.2.tgz#1d4bf9d572f11c14031f0436e1c10bc1f571f50b"
   integrity sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==
@@ -4506,6 +4557,18 @@ cyclist@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmmirror.com/cyclist/-/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
   integrity sha512-NJGVKPS81XejHcLhaLJS7plab0fK3slPh11mESeeDq2W4ZI5kUKK/LRRdVDvjJseojbPB7ZwjnyOybg3Igea/A==
+
+d3-cloud@~1.2.5:
+  version "1.2.5"
+  resolved "https://registry.npmmirror.com/d3-cloud/-/d3-cloud-1.2.5.tgz#3e91564f2d27fba47fcc7d812eb5081ea24c603d"
+  integrity sha512-4s2hXZgvs0CoUIw31oBAGrHt9Kt/7P9Ik5HIVzISFiWkD0Ga2VLAuO/emO/z1tYIpE7KG2smB4PhMPfFMJpahw==
+  dependencies:
+    d3-dispatch "^1.0.3"
+
+d3-dispatch@^1.0.3:
+  version "1.0.6"
+  resolved "https://registry.npmmirror.com/d3-dispatch/-/d3-dispatch-1.0.6.tgz#00d37bcee4dd8cd97729dd893a0ac29caaba5d58"
+  integrity sha512-fVjoElzjhCEy+Hbn8KygnmMS7Or0a9sI2UzGwoB7cCtvI1XpVN9GpoYlnb3xt2YV66oXYb1fLJ8GMvP4hdU1RA==
 
 d@1, d@^1.0.1:
   version "1.0.1"
@@ -5806,6 +5869,11 @@ fd-slicer@~1.1.0:
   integrity sha512-cE1qsB/VwyQozZ+q1dGxR8LBYNZeofhEdUNGSMbQD3Gw2lAzX9Zb3uIU6Ebc/Fmyjo9AWWfnn0AUCHqtevs/8g==
   dependencies:
     pend "~1.2.0"
+
+fecha@~4.2.0:
+  version "4.2.3"
+  resolved "https://registry.npmmirror.com/fecha/-/fecha-4.2.3.tgz#4d9ccdbc61e8629b259fdca67e65891448d569fd"
+  integrity sha512-OP2IUU6HeYKJi3i0z4A19kHMQoLVs4Hc+DPqqxI2h/DPZHTm/vjsfC6P0b4jCMy14XizLBqvndQ+UilD7707Jw==
 
 figgy-pudding@^3.5.1:
   version "3.5.2"
@@ -11646,7 +11714,7 @@ tslib@^1.10.0, tslib@^1.13.0, tslib@^1.8.1, tslib@^1.9.0:
   resolved "https://registry.npmmirror.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.3.0:
+tslib@^2.0.0, tslib@^2.0.3, tslib@^2.3.0:
   version "2.5.0"
   resolved "https://registry.npmmirror.com/tslib/-/tslib-2.5.0.tgz#42bfed86f5787aeb41d031866c8f402429e0fddf"
   integrity sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==

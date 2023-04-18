@@ -3,6 +3,8 @@ import { View } from '@tarojs/components'
 
 import './index.less'
 interface ITabsProps {
+  /** 样式透传 */
+  style?: React.CSSProperties;
   /** 配置tabs */
   configTabs: Array<{
     title: string;
@@ -15,6 +17,7 @@ interface ITabsProps {
 }
 
 const Tabs: FC<ITabsProps> = ({
+  style,
   configTabs,
   tabValue,
   onChange,
@@ -25,7 +28,7 @@ const Tabs: FC<ITabsProps> = ({
   }
 
   return (
-    <View className='tabs-container'>
+    <View style={style} className='tabs-container'>
       {configTabs?.map((item) => {
         return (
           <View
