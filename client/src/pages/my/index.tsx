@@ -1,8 +1,32 @@
+import { useEffect, useState } from 'react'
+import dayjs from 'dayjs'
 import { View, Text, Image } from '@tarojs/components'
+import Taro, { reLaunch } from '@tarojs/taro'
+
+import { UserInfo } from '@/types/user'
 
 import './index.less'
 
 const My = () => {
+  const [userInfo, setUserInfo] = useState<UserInfo>()
+
+  useEffect(() => {
+    Taro.cloud.callFunction({
+      name: 'getUserInfo',
+    }).then((res: any) => {
+      setUserInfo(res.result)
+    })
+  }, [])
+
+  const handleLogin = () => {
+    if (userInfo) {
+      return
+    }
+    Taro.redirectTo({
+      url: '/pages/login/index'
+    })
+  }
+
   const renderSelfData = (config: Array<{
     title: string;
     num: React.ReactNode;
@@ -50,22 +74,24 @@ const My = () => {
   return (
     <View className="my-container">
       <View className="self-info">
-        <Image className="avatar-img" src="https://cloud.zhuchj.com/avatar.jpg" />
-        <View className="self-name">Whiskeyi</View>
-        <View className="self-intro">stay happy~</View>
+        <View className="user-info" onClick={() => handleLogin()}>
+          <Image className="avatar-img" src={userInfo?.avatar || 'https://cloud.zhuchj.com/default-avatar.png'} />
+          <View className="self-name">{userInfo?.username || '点击登录'}</View>
+          <View className="self-intro">{userInfo?.intro || '暂无简介'}</View>
+        </View>
         <View className="self-data">
           {renderSelfData([
             {
               title: '已加入',
-              num: <View>66<Text className="suffix">/天</Text></View>
+              num: <View>{dayjs().diff(dayjs(userInfo?.registerTime), 'days')}<Text className="suffix">/天</Text></View>
             },
             {
               title: '记账',
-              num: <View>33<Text className="suffix">/笔</Text></View>
+              num: <View>{userInfo?.recordCount || '0'}<Text className="suffix">/笔</Text></View>
             },
             {
-              title: '获赞',
-              num: 0
+              title: '坚持',
+              num: <View>1<Text className="suffix">/天</Text></View>,
             }
           ])}
         </View>
@@ -88,7 +114,12 @@ const My = () => {
             title: '意见反馈'
           },
           {
-            title: '退出登录'
+            title: '退出登录',
+            onClick: () => {
+              reLaunch({
+                url: '/pages/login/index'
+              })
+            }
           }
         ])}
         </View>

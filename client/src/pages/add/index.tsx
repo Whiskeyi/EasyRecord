@@ -1,15 +1,28 @@
-import { useEffect, useState, useCallback, memo, useMemo } from 'react'
-import { View, Image, ITouchEvent } from '@tarojs/components'
-import { showToast } from '@tarojs/taro'
+import { useState, useCallback } from 'react'
+import dayjs from 'dayjs'
+import { View, ITouchEvent } from '@tarojs/components'
+import { showToast, useDidShow, switchTab } from '@tarojs/taro'
+
+import { SELECT_TYPES } from './constant'
 
 import './index.less'
 
+const TYPE = {
+  '支出': 'expend',
+  '收入': 'income',
+  '不计入收支': 'none'
+}
+
 const Add = (props) => {
+  const [type, setType] = useState<'expend' | 'income' | 'none'>(TYPE['支出'] as 'expend');
+  const [selectType, setSelectType] = useState<string>('');
   const [inputValue, setInputValue] = useState<string>('')
 
-  useEffect(() => {
+  useDidShow(() => {
+    setType('expend')
     setInputValue('')
-  }, [])
+    setSelectType('')
+  })
 
   const keyBoardClick = useCallback((value) => {
     if (!value) return
@@ -19,7 +32,6 @@ const Add = (props) => {
     }
     if (value === 'delete') {
       if (inputValue.length === 0) {
-        setInputValue('')
         return
       }
       setInputValue(val => val.slice(0, -1))
@@ -38,9 +50,9 @@ const Add = (props) => {
       })
       return
     }
-    if (+inputValue > 999999.99) {
+    if (+(inputValue + value) > 100000) {
       showToast({
-        title: '金额不能超过999999.99',
+        title: '金额不能超过十万',
         icon: 'none'
       })
       return
@@ -48,42 +60,53 @@ const Add = (props) => {
     setInputValue(val => val + value)
   }, [inputValue])
 
-  const TypeItem = memo((props: {
-    img: string,
-    title: string
-  }) => {
-    const { img, title } = props;
-    return useMemo(() => (
-      <View className="type-item">
-        <Image className="type-item-img" src={img} />
-        <View className="type-item-title">{title}</View>
-      </View>
-    ), [img, title])
-  })
-
-  const typeItems = useMemo(() => new Array(30).fill(1).map((item, index) => (
-    <TypeItem img="https://cloud.zhuchj.com/avatar.jpg" title="分类" key={index} />
-  )), [])
+  const addConfirm = useCallback(() => {
+    if (inputValue === '') {
+      showToast({
+        title: '请输入金额',
+        icon: 'none'
+      })
+      return
+    }
+    if (+inputValue === 0) {
+      showToast({
+        title: '金额不能为0',
+        icon: 'none'
+      })
+      return
+    }
+    if (selectType === '') {
+      showToast({
+        title: '请选择类型',
+        icon: 'none'
+      })
+      return
+    }
+    switchTab({
+      url: '/pages/index/index'
+    })
+  }, [inputValue])
 
   return (
     <View className="add-container">
-      <View className="add-header" />
+      <View className={`add-header ${type}`} />
       <View className="add-content">
         <View className="add-content-top">
           <View className="top-info">
             <View className="add-button-group">
-              <View className="add-button-group-item active">
-                支出
-              </View>
-              <View className="add-button-group-item">
-                收入
-              </View>
-              <View className="add-button-group-item">
-                不计入收支
-              </View>
+              {Object.keys(TYPE)?.map((item, index) => (
+                <View
+                  className={`add-button-group-item ${type === TYPE[item] ? type : ''}`}
+                  data-value={TYPE[item]}
+                  key={index}
+                  onClick={() => setType(TYPE[item])}
+                >
+                  {item}
+                </View>
+              ))}
             </View>
             <View className="add-date-picker">
-              4月18日
+              {dayjs().format('M月DD日')}
             </View>
           </View>
           <View className="top-input-content">
@@ -92,10 +115,22 @@ const Add = (props) => {
               {inputValue}
             </View>
           </View>
+          <View className="input-content-divide" />
         </View>
         <View className="add-content-middle">
-          {typeItems}
-          <TypeItem img="https://cloud.zhuchj.com/avatar.jpg" title="管理" />
+          {SELECT_TYPES[type]?.map((item, index) => (
+            <View
+              className="type-item"
+              key={item.name + index}
+            >
+              <View
+                className={`type-text ${selectType === item.name ? type : ''}`}
+                onClick={() => setSelectType(item.name)}
+              >
+                {item.name}
+              </View>
+            </View>
+          ))}
         </View>
         <View className="add-content-bottom">
           <View className="keyboard" onClick={(e: ITouchEvent) => keyBoardClick(e.target?.dataset?.value)}>
@@ -106,7 +141,7 @@ const Add = (props) => {
             <View className="key" data-value="4">4</View>
             <View className="key" data-value="5">5</View>
             <View className="key" data-value="6">6</View>
-            <View className="key confirm" data-value="confirm">确定</View>
+            <View className={`key confirm ${type}`} data-value="confirm" onClick={() => addConfirm()}>确定</View>
             <View className="key" data-value="7">7</View>
             <View className="key" data-value="8">8</View>
             <View className="key" data-value="9">9</View>

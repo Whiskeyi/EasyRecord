@@ -5,8 +5,20 @@
   position: relative;
 
   .add-header {
-    height: 600px;
+    height: 50vh;
     background-color: @primary-color;
+
+    &.expend {
+      background-color: @primary-color;
+    }
+
+    &.income {
+      background-color: @primary-color-2;
+    }
+
+    &.none {
+      background-color: @primary-color-3;
+    }
   }
 
   .add-content {
@@ -14,12 +26,12 @@
     flex-direction: column;
     position: absolute;
     margin: auto auto;
-    top: 0;
+    top: 180px;
     left: 0;
     right: 0;
     bottom: 0;
     width: 686px;
-    height: 90vh;
+    height: 80vh;
     background-color: #fff;
     border-radius: 15px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
@@ -52,9 +64,19 @@
         background-color: #eee;
         border-radius: 6px;
 
-        &.active {
+        &.expend {
           color: #fff;
           background-color: @primary-color;
+        }
+
+        &.income {
+          color: #fff;
+          background-color: @primary-color-2;
+        }
+
+        &.none {
+          color: #fff;
+          background-color: @primary-color-3;
         }
       }
     }
@@ -87,23 +109,59 @@
   }
 
   .add-content-middle {
+    position: relative;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
-    height: 340px;
+    height: 320px;
     padding: 12px 32px;
     overflow: scroll;
 
+    &::before {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: #fafafa;
+    }
+
     .type-item {
-      flex: 0 0 20%;
+      flex: 0 0 25%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       flex-shrink: 0;
-      margin-top: 24px;
+      padding: 32px 0;
+
+      .type-text {
+        text-align: center;
+        width: 120px;
+        font-size: 26px;
+        padding: 8px 0;
+        color: #999;
+        background-color: #fafafa;
+        border-radius: 5px;
+
+        &.expend {
+          color: #fff;
+          background-color: @primary-color;
+        }
+
+        &.income {
+          color: #fff;
+          background-color: @primary-color-2;
+        }
+
+        &.none {
+          color: #fff;
+          background-color: @primary-color-3;
+        }
+      }
 
       .type-item-img {
         width: 60px;
@@ -144,7 +202,7 @@
     border-radius: 4px;
 
     &.key:active {
-      background-color: #ccc;
+      background-color: #eee;
     }
 
     &.row-two {
@@ -156,6 +214,10 @@
     &.delete {
       background-color: #f2f2f2;
       color: #999;
+
+      &:active {
+        background-color: #ccc;
+      }
     }
 
     &.confirm {
@@ -164,6 +226,22 @@
       grid-row-end: 5;
       background-color: @primary-color;
       color: #fff;
+
+      &:active {
+        opacity: 0.8;
+      }
+
+      &.expend {
+        background-color: @primary-color;
+      }
+
+      &.income {
+        background-color: @primary-color-2;
+      }
+
+      &.none {
+        background-color: @primary-color-3;
+      }
     }
   }
 }

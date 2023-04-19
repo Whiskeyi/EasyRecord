@@ -1,16 +1,23 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { View, Image, Text } from "@tarojs/components"
 import Taro, { showToast, switchTab } from "@tarojs/taro"
 
 import Logo from "@/assets/img/logo.png"
 import Choose from "@/assets/icons/choose.png"
 import UnChoose from "@/assets/icons/un-choose.png"
-import api from "@/services"
 
 import "./index.less"
+import { useEffect } from "react"
 
 const Login = () => {
+  const timeoutRef = useRef<NodeJS.Timeout>();
   const [iconChoose, setIconChoose] = useState<boolean>(false);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timeoutRef.current);
+    };
+  }, [])
 
   const handleLogin = () => {
     if (!iconChoose) {
@@ -20,37 +27,29 @@ const Login = () => {
       })
       return
     }
+
     Taro.cloud.callFunction({
       name: 'login',
       data: {},
-      complete: res => {
-        console.log('callFunction test result: ', res)
+      success: (res: any) => {
+        Taro.setStorageSync('openid', res.result.openid)
+        showToast({
+          title: '登录成功',
+          icon: 'none'
+        })
+        timeoutRef.current = setTimeout(() => {
+          switchTab({
+            url: '/pages/index/index'
+          })
+        }, 800)
+      },
+      fail: () => {
+        showToast({
+          title: '登录失败',
+          icon: 'none'
+        })
       }
     })
-    // wx.login({
-    //   success (res) {
-    //     console.log(res)
-    //     if (res.code) {
-    //       //发起网络请求
-    //       // wx.request({
-    //       //   url: 'https://example.com/onLogin',
-    //       //   data: {
-    //       //     code: res.code
-    //       //   }
-    //       // })
-    //     } else {
-    //       showToast({
-    //         title: '登录失败'
-    //       })
-    //     }
-    //   }
-    // })
-    // console.log(wx.getUserProfile({
-    //   desc: '用于获取/完善个人资料',
-    // }))
-    //  switchTab({
-    //     url: '/pages/my/index'
-    //  })
   }
 
   return (
