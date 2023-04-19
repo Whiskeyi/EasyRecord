@@ -1,9 +1,8 @@
-import { FC } from "react";
 import { View } from "@tarojs/components";
 
 import './index.less';
 
-const DetailHeader: FC = () => {
+const DetailHeader= ({ recordInfo }) => {
   return <View className="detail-header">
     <View className="type-picker">
       <View className="type-picker-title">全部类型</View>
@@ -15,9 +14,9 @@ const DetailHeader: FC = () => {
       </View>
       <View className="total-container">
         <View className="total-expend-title">总支出</View>
-        <View className="total-num">-¥609.12</View>
+        <View className="total-num">-¥{recordInfo?.expend?.list[0]?.total || 0}</View>
         <View className="total-income-title">总收入</View>
-        <View className="total-num">+¥1230.12</View>
+        <View className="total-num">+¥{recordInfo?.income?.list[0]?.total || 0}</View>
       </View>
     </View>
   </View>;

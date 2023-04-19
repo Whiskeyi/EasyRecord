@@ -5,13 +5,13 @@ import DetailHeader from './components/detail-header'
 
 import './index.less'
 
-const Detail = () => {
+const Detail = ({ recordInfo }) => {
+
   return (
     <View className="detail-container">
-      <DetailHeader />
+      <DetailHeader recordInfo={recordInfo} />
       <View className="detail-content">
-        <DayCard />
-        <DayCard />
+        <DayCard recordInfo={recordInfo} />
       </View>
     </View>
   )

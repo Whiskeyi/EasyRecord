@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import { View, Text, Image } from '@tarojs/components'
-import Taro, { reLaunch } from '@tarojs/taro'
+import Taro, { reLaunch, hideLoading, showLoading } from '@tarojs/taro'
 
 import { UserInfo } from '@/types/user'
 
@@ -11,10 +11,15 @@ const My = () => {
   const [userInfo, setUserInfo] = useState<UserInfo>()
 
   useEffect(() => {
+    showLoading({
+      title: '加载中...'
+    })
     Taro.cloud.callFunction({
       name: 'getUserInfo',
     }).then((res: any) => {
       setUserInfo(res.result)
+    }).finally(() => {
+      hideLoading()
     })
   }, [])
 

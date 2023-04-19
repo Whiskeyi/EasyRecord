@@ -1,7 +1,7 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef, ReactElement } from 'react'
 import dayjs from 'dayjs'
-import { View, ITouchEvent } from '@tarojs/components'
-import { showToast, useDidShow, switchTab } from '@tarojs/taro'
+import { View, ITouchEvent, Input } from '@tarojs/components'
+import Taro, { showToast, useDidShow, switchTab } from '@tarojs/taro'
 
 import { SELECT_TYPES } from './constant'
 
@@ -15,77 +15,106 @@ const TYPE = {
 
 const Add = (props) => {
   const [type, setType] = useState<'expend' | 'income' | 'none'>(TYPE['支出'] as 'expend');
-  const [selectType, setSelectType] = useState<string>('');
-  const [inputValue, setInputValue] = useState<string>('')
+  const [amountType, setAmountType] = useState<string>('');
+  const [amount, setAmount] = useState<string>('')
+
+  const inputRef = useRef<any>()
+
+  const clearData = useCallback(() => {
+    setType('expend')
+    setAmount('')
+    setAmountType('')
+    inputRef.current.value = ''
+  }, [])
 
   useDidShow(() => {
-    setType('expend')
-    setInputValue('')
-    setSelectType('')
+    clearData()
   })
 
   const keyBoardClick = useCallback((value) => {
     if (!value) return
-    if (value === '.' && inputValue === '') {
-      setInputValue('0.')
+    if (value === '.' && amount === '') {
+      setAmount('0.')
       return
     }
     if (value === 'delete') {
-      if (inputValue.length === 0) {
+      if (amount.length === 0) {
         return
       }
-      setInputValue(val => val.slice(0, -1))
+      setAmount(val => val?.slice(0, -1))
       return
     }
     if (value === 'confirm') {
       return
     }
-    if (inputValue.includes('.') && value === '.') {
+    if (amount?.includes('.') && value === '.') {
       return
     }
-    if (inputValue?.split('.')[1]?.length === 2) {
+    if (amount?.split('.')[1]?.length === 2) {
       showToast({
         title: '最多支持小数点后两位',
         icon: 'none'
       })
       return
     }
-    if (+(inputValue + value) > 100000) {
+    if (+(amount + value) > 100000) {
       showToast({
         title: '金额不能超过十万',
         icon: 'none'
       })
       return
     }
-    setInputValue(val => val + value)
-  }, [inputValue])
+    setAmount(val => val + value)
+  }, [amount, inputRef.current?.value])
 
   const addConfirm = useCallback(() => {
-    if (inputValue === '') {
+    if (amount === '') {
       showToast({
         title: '请输入金额',
         icon: 'none'
       })
       return
     }
-    if (+inputValue === 0) {
+    if (+amount === 0) {
       showToast({
         title: '金额不能为0',
         icon: 'none'
       })
       return
     }
-    if (selectType === '') {
+    if (amountType === '') {
       showToast({
         title: '请选择类型',
         icon: 'none'
       })
       return
     }
-    switchTab({
-      url: '/pages/index/index'
+    Taro.cloud.callFunction({
+      name: 'addOneRecord',
+      data: {
+        type,
+        amountType,
+        amount: +amount,
+        recordTime: dayjs().valueOf(),
+        remark: inputRef.current?.value
+      }
+    }).then(res => {
+      showToast({
+        title: '添加成功',
+        icon: 'success'
+      })
+      clearData()
+      switchTab({
+        url: '/pages/index/index'
+      })
+    }).catch(err => {
+      console.error(err)
+      showToast({
+        title: '添加失败',
+        icon: 'none'
+      })
     })
-  }, [inputValue])
+  }, [amount, amountType, type, inputRef.current?.value])
 
   return (
     <View className="add-container">
@@ -99,7 +128,10 @@ const Add = (props) => {
                   className={`add-button-group-item ${type === TYPE[item] ? type : ''}`}
                   data-value={TYPE[item]}
                   key={index}
-                  onClick={() => setType(TYPE[item])}
+                  onClick={() => {
+                    if (type === TYPE[item]) return
+                    setType(TYPE[item])
+                  }}
                 >
                   {item}
                 </View>
@@ -112,25 +144,34 @@ const Add = (props) => {
           <View className="top-input-content">
             <View className="top-input-prefix">¥</View>
             <View className="top-input">
-              {inputValue}
+              {amount}
             </View>
           </View>
           <View className="input-content-divide" />
         </View>
         <View className="add-content-middle">
-          {SELECT_TYPES[type]?.map((item, index) => (
-            <View
-              className="type-item"
-              key={item.name + index}
-            >
+          <View className="type-items">
+            {SELECT_TYPES[type]?.map((item, index) => (
               <View
-                className={`type-text ${selectType === item.name ? type : ''}`}
-                onClick={() => setSelectType(item.name)}
+                className="type-item"
+                key={item.name + index}
               >
-                {item.name}
+                <View
+                  className={`type-text ${amountType === item.name ? type : ''}`}
+                  onClick={() => {
+                    if (amountType === item.name) return
+                    setAmountType(item.name)
+                  }}
+                >
+                  {item.name}
+                </View>
               </View>
-            </View>
-          ))}
+            ))}
+          </View>
+          <View className="input-container">
+            <View className="input-prefix">备注：</View>
+            <Input className="middle-input" ref={inputRef} />
+          </View>
         </View>
         <View className="add-content-bottom">
           <View className="keyboard" onClick={(e: ITouchEvent) => keyBoardClick(e.target?.dataset?.value)}>
