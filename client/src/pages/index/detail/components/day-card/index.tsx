@@ -1,22 +1,21 @@
 import { View, Image } from "@tarojs/components";
+import dayjs from "dayjs";
+import { navigateTo } from "@tarojs/taro";
+
+import { judgeType2PrefixChar } from "@/utils";
 
 import "./index.less";
-import dayjs from "dayjs";
-
-const typeCharMap = {
-  income: '+',
-  expend: '-',
-  none: ''
-}
 
 const DayCard = ({ recordInfo }) => {
   const renderCardItem = ({
+    _id,
     amountType,
     recordTime,
     remark,
     type,
     amount
   }: {
+    _id: string;
     amountType: string;
     recordTime: string;
     remark: string;
@@ -24,7 +23,11 @@ const DayCard = ({ recordInfo }) => {
     amount: number;
   }) => {
     return (
-      <View className="content-item">
+      <View className="content-item" onClick={() => {
+        navigateTo({
+          url: `/pages/detail/index?recordId=${_id}`
+        })
+      }}>
         <View className="item-left">
           <Image className="item-img" src="https://cloud.zhuchj.com/avatar.jpg" />
           <View className="item-info">
@@ -40,7 +43,7 @@ const DayCard = ({ recordInfo }) => {
             </View>
           </View>
         </View>
-        <View className="item-money">{typeCharMap[type]}¥{amount}</View>
+        <View className="item-money">{judgeType2PrefixChar(type)}¥{amount}</View>
       </View>
     )
   }
