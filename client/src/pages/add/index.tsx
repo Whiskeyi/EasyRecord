@@ -3,6 +3,8 @@ import dayjs from 'dayjs'
 import { View, ITouchEvent, Input } from '@tarojs/components'
 import Taro, { showToast, useDidShow, switchTab } from '@tarojs/taro'
 
+import useLock from '@/hooks/useLock'
+
 import { SELECT_TYPES } from './constant'
 
 import './index.less'
@@ -16,7 +18,8 @@ const TYPE = {
 const Add = (props) => {
   const [type, setType] = useState<'expend' | 'income' | 'none'>(TYPE['支出'] as 'expend');
   const [amountType, setAmountType] = useState<string>('');
-  const [amount, setAmount] = useState<string>('')
+  const [amount, setAmount] = useState<string>('');
+  const [isLock, setLock] = useLock(false);
 
   const inputRef = useRef<any>()
 
@@ -68,6 +71,8 @@ const Add = (props) => {
   }, [amount, inputRef.current?.value])
 
   const addConfirm = useCallback(() => {
+    if (isLock()) return
+    setLock(true)
     if (amount === '') {
       showToast({
         title: '请输入金额',
@@ -103,6 +108,7 @@ const Add = (props) => {
         title: '添加成功',
         icon: 'success'
       })
+      setLock(false)
       clearData()
       switchTab({
         url: '/pages/index/index'
