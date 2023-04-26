@@ -11,7 +11,9 @@ const Detail = ({ recordInfo }) => {
     <View className="detail-container">
       <DetailHeader recordInfo={recordInfo} />
       <View className="detail-content">
-        <DayCard recordInfo={recordInfo} />
+        {recordInfo?.userRecordList?.list?.map((item, index) => {
+          return <DayCard key={index} recordInfo={item} />
+        })}
       </View>
     </View>
   )

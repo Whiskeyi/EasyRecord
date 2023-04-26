@@ -11,11 +11,44 @@ exports.main = async (event, context) => {
   const $ = db.command.aggregate
 
   const userRecordList = await db.collection('amount_records')
-    .where({
-      openid: wxContext.OPENID,
-    })
-    .orderBy('recordTime', 'desc')
-    .get()
+  .aggregate()
+  .match({
+    openid: wxContext.OPENID,
+  })
+  .sort({
+    createTime: -1,
+  })
+  .group({
+    _id: {
+      year: $.year('$createTime'),
+      month: $.month('$createTime'),
+      day: $.dayOfMonth('$createTime'),
+    },
+    recordList: $.push({
+      _id: '$_id',
+      openid: '$openid',
+      type: '$type',
+      amount: '$amount',
+      recordTime: '$recordTime',
+      amountType: '$amountType',
+      remark: '$remark',
+    }),
+  })
+  .project({
+    _id: 0,
+    date: {
+      $dateFromParts: {
+        year: '$_id.year',
+        month: '$_id.month',
+        day: '$_id.day',
+      },
+    },
+    recordList: 1,
+  })
+  .sort({
+    date: -1,
+  })
+  .end()
 
   // 获得amount_records集合中openid为当前用户，type为expend的amount总和
   const expend = await db.collection('amount_records')

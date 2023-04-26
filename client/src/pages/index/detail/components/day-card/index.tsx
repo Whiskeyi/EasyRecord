@@ -52,8 +52,7 @@ const DayCard = ({ recordInfo }) => {
     <View className="day-card-container">
       <View className="card-header">
         <View className="header-date">
-          <View className="header-date-time">{dayjs().format('M月DD日')}</View>
-          <View className="header-date-title">今天</View>
+          <View className="header-date-time">{dayjs(recordInfo?.date).format('M月DD日')}</View>
         </View>
         <View className="header-money-container">
           <View className="header-money">
@@ -67,7 +66,7 @@ const DayCard = ({ recordInfo }) => {
         </View>
       </View>
       <View className="card-content">
-        {recordInfo?.userRecordList?.data?.map((item) => {
+        {recordInfo?.recordList?.map((item) => {
           return renderCardItem(item)
         })}
       </View>
