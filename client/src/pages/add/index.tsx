@@ -103,11 +103,7 @@ const Add = (props) => {
         recordTime: dayjs().valueOf(),
         remark: inputRef.current?.value
       }
-    }).then(res => {
-      showToast({
-        title: '添加成功',
-        icon: 'success'
-      })
+    }).then(() => {
       setLock(false)
       clearData()
       switchTab({

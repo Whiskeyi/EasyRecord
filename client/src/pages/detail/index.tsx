@@ -1,11 +1,10 @@
-import { View, Image } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import Taro, { useRouter, showLoading, hideLoading } from "@tarojs/taro";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 
 import { RecordDetail } from '@/types/user'
 import { judgeType2PrefixChar } from "@/utils";
-import ArrowRight from "@/assets/icons/arrow-right.png";
 
 import "./index.less";
 
@@ -21,8 +20,7 @@ const CardDetail = () => {
       data: {
         recordId,
       },
-    }).then((res) => {
-      console.log(res)
+    }).then(() => {
       Taro.showToast({
         title: "删除成功",
         icon: "success",
@@ -51,10 +49,9 @@ const CardDetail = () => {
       <View className="card-container">
         <View className="card-title">
           <View className="title-type">{recordDetail?.amountType}</View>
-          <Image className="title-icon" src={ArrowRight} />
         </View>
         <View className="card-content">
-          {judgeType2PrefixChar(recordDetail?.type as 'income')}{recordDetail?.amount}
+          {judgeType2PrefixChar(recordDetail?.type as 'income')}¥{recordDetail?.amount}
         </View>
         <View className="card-items">
           <View className="card-item">
