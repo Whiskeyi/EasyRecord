@@ -13,5 +13,15 @@ exports.main = async (event, context) => {
   const collection = db.collection('amount_records')
   const result = await collection.doc(recordId).remove()
 
+  // 更新user表中recordCount字段记账总数
+  const { OPENID } = cloud.getWXContext()
+  const { data } = await db.collection('user').where({ openid: OPENID }).get()
+  const { recordCount } = data[0]
+  await db.collection('user').doc(data[0]._id).update({
+    data: {
+      recordCount: recordCount - 1,
+    },
+  })
+
   return result
 }

@@ -33,6 +33,8 @@ exports.main = async (event, context) => {
       amountType: '$amountType',
       remark: '$remark',
     }),
+    totalExpend: { $sum: { $cond: [{ $eq: ['$type', 'expend'] }, '$amount', 0] } },
+    totalIncome: { $sum: { $cond: [{ $eq: ['$type', 'income'] }, '$amount', 0] } },
   })
   .project({
     _id: 0,
@@ -44,6 +46,8 @@ exports.main = async (event, context) => {
       },
     },
     recordList: 1,
+    totalExpend: 1,
+    totalIncome: 1,
   })
   .sort({
     date: -1,

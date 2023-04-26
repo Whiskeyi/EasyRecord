@@ -57,11 +57,11 @@ const DayCard = ({ recordInfo }) => {
         <View className="header-money-container">
           <View className="header-money">
             <View className="header-money-title">支出</View>
-            <View className="header-money-amount">-￥{recordInfo?.expend?.list[0]?.total || 0}</View>
+            <View className="header-money-amount">-￥{recordInfo?.totalExpend || 0}</View>
           </View>
           <View className="header-money">
             <View className="header-money-title">收入</View>
-            <View className="header-money-amount">+￥{recordInfo?.income?.list[0]?.total || 0}</View>
+            <View className="header-money-amount">+￥{recordInfo?.totalIncome || 0}</View>
           </View>
         </View>
       </View>

@@ -31,8 +31,8 @@ exports.main = async (event, context) => {
   // 根据openid判断是否在amount_records集合中相邻记录时间是否不在同一天，如是则在user集合中continueRecord字段自增1或重置为1
   await db.collection('amount_records').where({
     openid: OPENID,
-  }).orderBy('recordTime', 'desc').limit(2).get().then(res => {
-    if (res.data.length <= 1) {
+  }).orderBy('recordTime', 'asc').limit(1).get().then(res => {
+    if (res.data.length === 0) {
       db.collection('user').where({
         openid: OPENID,
       }).update({
@@ -41,12 +41,12 @@ exports.main = async (event, context) => {
         },
       })
     }
-    if (res.data.length === 2) {
-      const [first, second] = res.data
-      const firstDate = dayjs(first.recordTime).format('YYYY-MM-DD')
-      const secondDate = dayjs(second.recordTime).format('YYYY-MM-DD')
+    if (res.data.length === 1) {
+      const last = res.data
+      const lastDate = dayjs(last.recordTime).format('YYYY-MM-DD')
+      const nowDate = dayjs().format('YYYY-MM-DD')
       // 如果相邻记录时间刚好隔一天，则在user集合中continueRecord字段自增1
-      if (dayjs(firstDate).diff(dayjs(secondDate), 'day') === 1) {
+      if (dayjs(lastDate).diff(dayjs(nowDate), 'day') === 1) {
         db.collection('user').where({
           openid: OPENID,
         }).update({
@@ -54,7 +54,8 @@ exports.main = async (event, context) => {
             continueRecord: db.command.inc(1),
           },
         })
-      } else if (dayjs(firstDate).diff(dayjs(secondDate), 'day') > 1) {
+      }
+      if (dayjs(lastDate).diff(dayjs(nowDate), 'day') > 1) {
         db.collection('user').where({
           openid: OPENID,
         }).update({

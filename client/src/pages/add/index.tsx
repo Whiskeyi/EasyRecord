@@ -104,7 +104,6 @@ const Add = (props) => {
         remark: inputRef.current?.value
       }
     }).then(() => {
-      setLock(false)
       clearData()
       switchTab({
         url: '/pages/index/index'
@@ -115,6 +114,8 @@ const Add = (props) => {
         title: '添加失败',
         icon: 'none'
       })
+    }).finally(() => {
+      setLock(false)
     })
   }, [amount, amountType, type, inputRef.current?.value])
 
