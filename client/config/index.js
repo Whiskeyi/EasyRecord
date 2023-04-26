@@ -11,7 +11,6 @@ const config = {
   },
   sourceRoot: 'src',
   outputRoot: 'dist',
-  plugins: [],
   defineConstants: {
   },
   alias: {
@@ -29,7 +28,6 @@ const config = {
       pxtransform: {
         enable: true,
         config: {
-
         }
       },
       url: {
@@ -50,6 +48,7 @@ const config = {
   h5: {
     publicPath: '/',
     staticDirectory: 'static',
+    esnextModules: ['taro-ui'],
     postcss: {
       autoprefixer: {
         enable: true,

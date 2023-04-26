@@ -28,7 +28,7 @@ export const SELECT_TYPES = {
       name: '宠物',
     },
     {
-      name: '养蛙'
+      name: '养娃'
     },
     {
       name: '运动健身',
