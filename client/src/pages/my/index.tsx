@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import dayjs from 'dayjs'
 import { View, Text, Image } from '@tarojs/components'
-import Taro, { reLaunch, hideLoading, showLoading } from '@tarojs/taro'
+import Taro, { reLaunch, useDidShow } from '@tarojs/taro'
 
 import { UserInfo } from '@/types/user'
 
@@ -10,18 +10,13 @@ import './index.less'
 const My = () => {
   const [userInfo, setUserInfo] = useState<UserInfo>()
 
-  useEffect(() => {
-    showLoading({
-      title: '加载中...'
-    })
+  useDidShow(() => {
     Taro.cloud.callFunction({
       name: 'getUserInfo',
     }).then((res: any) => {
       setUserInfo(res.result)
-    }).finally(() => {
-      hideLoading()
     })
-  }, [])
+  })
 
   const handleLogin = () => {
     if (userInfo) {
@@ -96,7 +91,7 @@ const My = () => {
             },
             {
               title: '坚持',
-              num: <View>1<Text className="suffix">/天</Text></View>,
+              num: <View>{userInfo?.continueRecord || '0'}<Text className="suffix">/天</Text></View>,
             }
           ])}
         </View>

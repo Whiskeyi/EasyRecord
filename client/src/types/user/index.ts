@@ -9,6 +9,8 @@ export interface UserInfo {
   registerTime: string;
   /** 记账次数 */
   recordCount: number;
+  /** 连续记账 */
+  continueRecord: number;
 }
 
 export interface RecordDetail {

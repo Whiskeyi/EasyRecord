@@ -12,5 +12,20 @@ exports.main = async (event, context) => {
 
   const { data } = await db.collection('user').where({ openid: OPENID }).get()
 
-  return data[0]
+  let isRecord = false;
+
+  // 检查该用户记账记录是否有当日的数据
+  await db.collection('amount_records').where({
+    openid: OPENID,
+    recordTime: db.command.gte(new Date(new Date().toLocaleDateString()).getTime()),
+  }).get().then(res => {
+    if (res.data.length > 0) {
+      isRecord = true
+    }
+  })
+
+  return {
+    ...data[0],
+    continueRecord: isRecord ? data[0].continueRecord : 0,
+  }
 }
