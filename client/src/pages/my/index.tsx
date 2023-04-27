@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import dayjs from 'dayjs'
 import { View, Text, Image } from '@tarojs/components'
-import Taro, { reLaunch, useDidShow } from '@tarojs/taro'
+import Taro, { reLaunch, useDidShow, navigateTo } from '@tarojs/taro'
 
 import { UserInfo } from '@/types/user'
 
@@ -108,10 +108,20 @@ const My = () => {
             title: '消息推送'
           },
           {
-            title: '关于我们'
+            title: '关于我们',
+            onClick: () => {
+              navigateTo({
+                url: '/pages/my/about-us/index'
+              })
+            }
           },
           {
-            title: '意见反馈'
+            title: '意见反馈',
+            onClick: () => {
+              navigateTo({
+                url: '/pages/my/feedback/index'
+              })
+            }
           },
           {
             title: '退出登录',

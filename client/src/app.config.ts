@@ -1,10 +1,16 @@
 export default defineAppConfig({
   pages: [
+    // 首页
     'pages/index/index',
-    'pages/my/index',
-    'pages/add/index',
-    'pages/login/index',
     'pages/detail/index',
+    // 记一笔
+    'pages/add/index',
+    // 我的
+    'pages/my/index',
+    'pages/my/about-us/index',
+    'pages/my/feedback/index',
+    // 登录
+    'pages/login/index',
   ],
   window: {
     backgroundTextStyle: 'light',

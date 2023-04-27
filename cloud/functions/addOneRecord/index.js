@@ -31,7 +31,7 @@ exports.main = async (event, context) => {
   // 根据openid判断是否在amount_records集合中相邻记录时间是否不在同一天，如是则在user集合中continueRecord字段自增1或重置为1
   await db.collection('amount_records').where({
     openid: OPENID,
-  }).orderBy('recordTime', 'asc').limit(1).get().then(res => {
+  }).orderBy('recordTime', 'desc').limit(1).get().then(res => {
     if (res.data.length === 0) {
       db.collection('user').where({
         openid: OPENID,

@@ -2,6 +2,7 @@ import { FC, useState } from 'react'
 import { View } from '@tarojs/components'
 
 import './index.less'
+
 interface ITabsProps {
   /** 样式透传 */
   style?: React.CSSProperties;

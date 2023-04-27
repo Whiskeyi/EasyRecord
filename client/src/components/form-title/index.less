@@ -1,0 +1,24 @@
+@import '~@/styles/variables.less';
+
+.form-title-container {
+  padding: 32px 0;
+
+  .form-title {
+    position: relative;
+    margin-left: 20px;
+    font-size: 28px;
+    line-height: 32px;
+
+    &::after {
+      position: absolute;
+      left: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      content: '';
+      display: block;
+      width: 4px;
+      height: 32px;
+      background-color: @primary-color;
+    }
+  }
+}
