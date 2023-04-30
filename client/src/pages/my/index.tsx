@@ -108,18 +108,18 @@ const My = () => {
             title: '消息推送'
           },
           {
-            title: '关于我们',
-            onClick: () => {
-              navigateTo({
-                url: '/pages/my/about-us/index'
-              })
-            }
-          },
-          {
             title: '意见反馈',
             onClick: () => {
               navigateTo({
                 url: '/pages/my/feedback/index'
+              })
+            }
+          },
+          {
+            title: '关于我们',
+            onClick: () => {
+              navigateTo({
+                url: '/pages/my/about-us/index'
               })
             }
           },
