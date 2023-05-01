@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, Picker } from "@tarojs/components";
 import dayjs from "dayjs";
-import { useDidShow } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
 
 import { SELECT_TYPES } from "@/pages/add/constant";
 
@@ -18,11 +18,6 @@ const DetailHeader = ({ recordInfo, refresh }) => {
   const [selectDate, setSelectDate] = useState(dayjs().format('YYYY-MM'));
   const [selectType, setSelectType] = useState('全部类型');
 
-  useDidShow(() => {
-    setSelectDate(dayjs().format('YYYY-MM'))
-    setSelectType('全部类型')
-  })
-
   return (
     <View className="detail-header">
       <Picker
@@ -31,6 +26,7 @@ const DetailHeader = ({ recordInfo, refresh }) => {
         range={ALL_TYPE}
         onChange={(e: any) => {
           setSelectType(ALL_TYPE?.[e.target.value])
+          Taro.setStorageSync('selectType', ALL_TYPE?.[e.target.value])
           refresh(selectDate, ALL_TYPE?.[e.target.value])
         }}
       >
@@ -47,6 +43,7 @@ const DetailHeader = ({ recordInfo, refresh }) => {
           end={dayjs().format('YYYY-MM')}
           onChange={async (e: any) => {
             setSelectDate(dayjs(e.target.value).format('YYYY-MM'))
+            Taro.setStorageSync('selectDate', dayjs(e.target.value).format('YYYY-MM'))
             refresh(dayjs(e.target.value).format('YYYY-MM'), selectType)
           }}
         >

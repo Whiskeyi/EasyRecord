@@ -19,8 +19,8 @@ const Index = () => {
     Taro.cloud.callFunction({
       name: 'getUserRecordList',
       data: {
-        date: date || dayjs().format('YYYY-MM'),
-        type: type || '全部类型'
+        date: date || Taro.getStorageSync('selectDate') || dayjs().format('YYYY-MM'),
+        type: type || Taro.getStorageSync('selectType') || '全部类型'
       }
     }).then((res: any) => {
       setRecordInfo(res.result)
