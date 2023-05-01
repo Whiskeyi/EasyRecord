@@ -105,7 +105,12 @@ const My = () => {
             title: '分类管理'
           },
           {
-            title: '消息推送'
+            title: '消息推送',
+            onClick: () => {
+              navigateTo({
+                url: '/pages/my/message-notice/index'
+              })
+            }
           },
           {
             title: '意见反馈',

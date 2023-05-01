@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react'
-import { View, Text } from '@tarojs/components'
+import { useCallback, useEffect, useState } from 'react'
+import { View } from '@tarojs/components'
 import Taro, { useDidShow, showLoading, hideLoading } from '@tarojs/taro'
 import dayjs from 'dayjs'
 
@@ -12,7 +12,6 @@ import './index.less'
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('1');
-
   const [recordInfo, setRecordInfo] = useState();
 
   const refresh = useCallback((date?: string, type?: string) => {
@@ -27,6 +26,11 @@ const Index = () => {
     }).finally(() => {
       hideLoading()
     })
+  }, [])
+
+  useEffect(() => {
+    Taro.setStorageSync('selectDate', dayjs().format('YYYY-MM'))
+    Taro.setStorageSync('selectType', '全部类型')
   }, [])
 
   useDidShow(() => {

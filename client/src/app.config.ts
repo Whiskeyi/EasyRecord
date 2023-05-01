@@ -9,6 +9,7 @@ export default defineAppConfig({
     'pages/my/index',
     'pages/my/about-us/index',
     'pages/my/feedback/index',
+    'pages/my/message-notice/index',
     // 登录
     'pages/login/index',
   ],

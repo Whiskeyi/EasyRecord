@@ -31,7 +31,7 @@ const DetailHeader = ({ recordInfo, refresh }) => {
         }}
       >
         <View className="type-picker">
-          <View className="type-picker-title">{selectType}</View>
+          <View className="type-picker-title">{Taro.getStorageSync('selectType') || selectType}</View>
           <View className="type-picker-icon" />
         </View>
       </Picker>
@@ -49,7 +49,7 @@ const DetailHeader = ({ recordInfo, refresh }) => {
         >
           <View className="bottom-left">
             <View className="date-picker">
-              {dayjs(selectDate).format('YYYY年M月')}
+              {dayjs(Taro.getStorageSync('selectDate')).format('YYYY年M月') || dayjs(selectDate).format('YYYY年M月')}
             </View>
             <View className="arrow-right" />
           </View>
