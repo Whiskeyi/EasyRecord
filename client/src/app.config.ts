@@ -10,6 +10,7 @@ export default defineAppConfig({
     'pages/my/about-us/index',
     'pages/my/feedback/index',
     'pages/my/message-notice/index',
+    'pages/my/self-info/index',
     // 登录
     'pages/login/index',
   ],

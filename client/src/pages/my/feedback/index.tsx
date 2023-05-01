@@ -57,8 +57,7 @@ const Feedback = () => {
   }, [value])
 
   return <View className="feedback-container">
-    <AtForm
-    >
+    <AtForm>
       <FormTitle title="反馈图片" />
       <AtImagePicker
         className="image-picker"

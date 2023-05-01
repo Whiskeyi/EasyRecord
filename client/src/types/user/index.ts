@@ -1,16 +1,16 @@
 export interface UserInfo {
   /** 用户头像 */
-  avatar: string;
+  avatar?: string;
   /** 用户简介 */
-  intro: string;
+  intro?: string;
   /** 用户名称 */
-  username: string;
+  username?: string;
   /** 注册时间 */
-  registerTime: string;
+  registerTime?: string;
   /** 记账次数 */
-  recordCount: number;
+  recordCount?: number;
   /** 连续记账 */
-  continueRecord: number;
+  continueRecord?: number;
 }
 
 export interface RecordDetail {

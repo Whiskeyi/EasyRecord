@@ -99,7 +99,12 @@ const My = () => {
       <View className="self-config">
         {renderConfigItems([
           {
-            title: '个人信息'
+            title: '个人信息',
+            onClick: () => {
+              navigateTo({
+                url: '/pages/my/self-info/index'
+              })
+            }
           },
           {
             title: '分类管理'
