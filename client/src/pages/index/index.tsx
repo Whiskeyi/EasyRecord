@@ -14,9 +14,13 @@ const Index = () => {
 
   const [recordInfo, setRecordInfo] = useState();
 
-  const refresh = useCallback(() => {
+  const refresh = useCallback((date?: string, type?: string) => {
     Taro.cloud.callFunction({
       name: 'getUserRecordList',
+      data: {
+        date: date || '',
+        type: type || ''
+      }
     }).then((res: any) => {
       setRecordInfo(res.result)
     }).finally(() => {
@@ -32,7 +36,7 @@ const Index = () => {
   })
 
   return (
-    <View>
+    <View className="index-container">
       <Tabs
         configTabs={[
           {
@@ -48,7 +52,7 @@ const Index = () => {
         onChange={(value) => setActiveTab(value)}
       />
       <View className="index-content">
-        {activeTab === '1' && <Detail recordInfo={recordInfo} />}
+        {activeTab === '1' && <Detail recordInfo={recordInfo} refresh={refresh} />}
         {activeTab === '2' && <Statistics />}
       </View>
     </View>

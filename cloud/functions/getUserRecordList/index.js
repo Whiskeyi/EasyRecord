@@ -10,58 +10,81 @@ exports.main = async (event, context) => {
 
   const $ = db.command.aggregate
 
+  const currentDate = new Date()
+  const currentYear = currentDate.getFullYear()
+  const currentMonth = currentDate.getMonth() + 1
+
+  const { date = `${currentYear}-${currentMonth.toString().padStart(2, '0')}`, type = '全部类型' } = event
+  const startDate = new Date(date)
+  const endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0, 23, 59, 59, 999)
+
+  const matchQuery = {
+    openid: wxContext.OPENID,
+  }
+  if (type !== '全部类型') {
+    matchQuery.amountType = type
+  }
+  if (date) {
+    matchQuery.createTime = {
+      $gte: startDate,
+      $lte: endDate,
+    }
+  }
+
+  const $group = {
+    _id: {
+      date: $.dateToString({
+        date: '$createTime',
+        format: '%Y-%m-%d',
+        timezone: 'Asia/Shanghai',
+      }),
+    },
+    recordList: $.push({
+      _id: '$_id',
+      openid: '$openid',
+      type: '$type',
+      amount: '$amount',
+      recordTime: '$recordTime',
+      amountType: '$amountType',
+      remark: '$remark',
+    }),
+    totalExpend: { $sum: { $cond: [{ $eq: ['$type', 'expend'] }, '$amount', 0] } },
+    totalIncome: { $sum: { $cond: [{ $eq: ['$type', 'income'] }, '$amount', 0] } },
+  }
+
+  const $project = {
+    _id: 0,
+    date: {
+      $dateFromString: {
+        dateString: '$_id.date',
+        format: '%Y-%m-%d',
+        timezone: 'Asia/Shanghai',
+      },
+    },
+    recordList: 1,
+    totalExpend: 1,
+    totalIncome: 1,
+  }
+
   const userRecordList = await db.collection('amount_records')
     .aggregate()
-    .match({
-      openid: wxContext.OPENID,
-    })
-    .sort({
-      createTime: -1,
-    })
-    .group({
-      _id: {
-        date: $.dateToString({
-          date: '$createTime',
-          format: '%Y-%m-%d',
-          timezone: 'Asia/Shanghai',
-        }),
-      },
-      recordList: $.push({
-        _id: '$_id',
-        openid: '$openid',
-        type: '$type',
-        amount: '$amount',
-        recordTime: '$recordTime',
-        amountType: '$amountType',
-        remark: '$remark',
-      }),
-      totalExpend: { $sum: { $cond: [{ $eq: ['$type', 'expend'] }, '$amount', 0] } },
-      totalIncome: { $sum: { $cond: [{ $eq: ['$type', 'income'] }, '$amount', 0] } },
-    })
-    .project({
-      _id: 0,
-      date: {
-        $dateFromString: {
-          dateString: '$_id.date',
-          format: '%Y-%m-%d',
-          timezone: 'Asia/Shanghai',
-        },
-      },
-      recordList: 1,
-      totalExpend: 1,
-      totalIncome: 1,
-    })
+    .match(matchQuery)
+    .group($group)
+    .project($project)
     .sort({
       date: -1,
     })
     .end()
 
-  // 获得amount_records集合中openid为当前用户，type为expend的amount总和
   const expend = await db.collection('amount_records')
     .aggregate()
     .match({
       openid: wxContext.OPENID,
       type: 'expend',
+      createTime: {
+        $gte: startDate,
+        $lte: endDate,
+      },
     })
     .group({
       _id: null,
@@ -69,12 +92,15 @@ exports.main = async (event, context) => {
     })
     .end()
 
-  // 获得amount_records集合中openid为当前用户，type为income的amount总和
   const income = await db.collection('amount_records')
     .aggregate()
     .match({
       openid: wxContext.OPENID,
       type: 'income',
+      createTime: {
+        $gte: startDate,
+        $lte: endDate,
+      },
     })
     .group({
       _id: null,
