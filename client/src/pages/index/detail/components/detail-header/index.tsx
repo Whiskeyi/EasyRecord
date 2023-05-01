@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { View, Picker } from "@tarojs/components";
 import dayjs from "dayjs";
+import { useDidShow } from "@tarojs/taro";
 
 import { SELECT_TYPES } from "@/pages/add/constant";
 
@@ -17,9 +18,15 @@ const DetailHeader = ({ recordInfo, refresh }) => {
   const [selectDate, setSelectDate] = useState(dayjs().format('YYYY-MM'));
   const [selectType, setSelectType] = useState('全部类型');
 
+  useDidShow(() => {
+    setSelectDate(dayjs().format('YYYY-MM'))
+    setSelectType('全部类型')
+  })
+
   return (
     <View className="detail-header">
       <Picker
+        className="type-picker-container"
         mode="selector"
         range={ALL_TYPE}
         onChange={(e: any) => {
@@ -28,15 +35,21 @@ const DetailHeader = ({ recordInfo, refresh }) => {
         }}
       >
         <View className="type-picker">
-          <View className="type-picker-title">全部类型</View>
+          <View className="type-picker-title">{selectType}</View>
           <View className="type-picker-icon" />
         </View>
       </Picker>
       <View className="header-bottom">
-        <Picker fields="month" mode="date" value={dayjs().format('YYYY-MM')} onChange={async(e: any) => {
-          setSelectDate(dayjs(e.target.value).format('YYYY-MM'))
-          refresh(dayjs(e.target.value).format('YYYY-MM'), selectType)
-        }}>
+        <Picker
+          fields="month"
+          mode="date"
+          value={dayjs().format('YYYY-MM')}
+          end={dayjs().format('YYYY-MM')}
+          onChange={async (e: any) => {
+            setSelectDate(dayjs(e.target.value).format('YYYY-MM'))
+            refresh(dayjs(e.target.value).format('YYYY-MM'), selectType)
+          }}
+        >
           <View className="bottom-left">
             <View className="date-picker">
               {dayjs(selectDate).format('YYYY年M月')}

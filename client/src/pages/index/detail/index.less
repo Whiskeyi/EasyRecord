@@ -4,7 +4,29 @@
   display: flex;
   flex-direction: column;
 
+  .fixed-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    width: 72px;
+    height: 72px;
+    right: 10%;
+    bottom: 10%;
+    border-radius: 50%;
+    color: #fff;
+    background-color: @primary-color;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .24), 0 0 6px rgba(0, 0, 0, .08);
+    z-index: 10;
+
+    .top-img {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
   .detail-content {
+    flex: 1;
     margin: 16px;
     background-color: #fafafa;
 
