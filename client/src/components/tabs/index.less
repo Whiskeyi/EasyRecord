@@ -1,10 +1,18 @@
 @import '~@/styles/variables.less';
 
+.tabs-height {
+  height: 72px;
+}
+
 .tabs-container {
+  position: fixed;
   display: flex;
   flex-direction: row;
   justify-content: center;
   width: 100%;
+  padding: 20px 0;
+  background-color: #fff;
+  z-index: 10;
 
   .tab-item {
     padding: 0 40px;

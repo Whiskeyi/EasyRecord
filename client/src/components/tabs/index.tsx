@@ -29,19 +29,21 @@ const Tabs: FC<ITabsProps> = ({
   }
 
   return (
-    <View style={style} className="tabs-container">
-      {configTabs?.map((item) => {
-        return (
-          <View
-            className={`tab-item ${tabValue === item.value ? 'active' : ''}`}
-            key={item.value}
-            onClick={() => handleClick(item.value)}
-          >
-            {item.title}
-          </View>
-        );
-      })
-      }
+    <View className="tabs-height">
+      <View style={style} className="tabs-container">
+        {configTabs?.map((item) => {
+          return (
+            <View
+              className={`tab-item ${tabValue === item.value ? 'active' : ''}`}
+              key={item.value}
+              onClick={() => handleClick(item.value)}
+            >
+              {item.title}
+            </View>
+          );
+        })
+        }
+      </View>
     </View>
   )
 };

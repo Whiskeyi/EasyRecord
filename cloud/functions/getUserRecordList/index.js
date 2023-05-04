@@ -69,6 +69,9 @@ exports.main = async (event, context) => {
   const userRecordList = await db.collection('amount_records')
     .aggregate()
     .match(matchQuery)
+    .sort({
+      createTime: -1,
+    })
     .group($group)
     .project($project)
     .sort({
