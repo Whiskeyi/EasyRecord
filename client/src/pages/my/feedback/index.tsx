@@ -1,6 +1,7 @@
 import { View } from "@tarojs/components"
 import { useState, useCallback, useRef, useEffect } from "react"
 import { AtForm, AtTextarea, AtButton, AtImagePicker } from 'taro-ui'
+import dayjs from "dayjs"
 import Taro from "@tarojs/taro"
 
 import { FormTitle } from '@/components'
@@ -32,15 +33,33 @@ const Feedback = () => {
     return true
   }, [value])
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = useCallback(async () => {
     if (!checkSubmit()) {
       return
     }
-    Taro.cloud.callFunction({
+
+    const fileImgs = files.map((item: any) => item.url || item.path)
+
+    const fileIds = await Promise.all(fileImgs.map((item: any) => {
+      return Taro.cloud.uploadFile({
+        cloudPath: `feedback/${dayjs().valueOf()}-${(Math.random() * 10000).toFixed(0)}.png`,
+        filePath: item,
+      }).then((res: any) => {
+        return res.fileID
+      })
+    }))
+
+    const images = await Taro.cloud.getTempFileURL({
+      fileList: fileIds
+    }).then((res: any) => {
+      return res.fileList.map((item: any) => item.tempFileURL)
+    })
+
+    await Taro.cloud.callFunction({
       name: 'addFeedback',
       data: {
         content: value,
-        images: files,
+        images
       }
     }).then((res: any) => {
       Taro.showToast({
@@ -52,8 +71,6 @@ const Feedback = () => {
         Taro.navigateBack()
       }, 2000)
     })
-
-    console.log(value, files)
   }, [value])
 
   return <View className="feedback-container">

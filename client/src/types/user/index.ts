@@ -11,6 +11,8 @@ export interface UserInfo {
   recordCount?: number;
   /** 连续记账 */
   continueRecord?: number;
+  /** openid */
+  openid?: string;
 }
 
 export interface RecordDetail {
