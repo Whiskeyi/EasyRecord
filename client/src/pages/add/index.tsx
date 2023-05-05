@@ -241,7 +241,7 @@ const Add = (props) => {
             ))}
             <View className="type-item">
               <View
-                className="type-text"
+                className={`type-text manage-${type}}`}
                 onClick={() => {
                   navigateTo({
                     url: '/pages/my/types-manage/index'

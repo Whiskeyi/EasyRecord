@@ -135,6 +135,7 @@
 
     .input-container {
       position: relative;
+      padding-top: 6px;
       height: 70px;
       display: flex;
       flex-direction: row;
@@ -180,6 +181,18 @@
         color: #999;
         background-color: #fafafa;
         border-radius: 5px;
+
+        &.manage-expend {
+          color: @primary-color;
+        }
+
+        &.manage-income {
+          color: @primary-color-2;
+        }
+
+        &.manage-none {
+          color: @primary-color-3;
+        }
 
         &.expend {
           color: #fff;
