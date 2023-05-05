@@ -1,7 +1,7 @@
-import { useState, useCallback, useRef, ReactElement } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import dayjs from 'dayjs'
 import { View, ITouchEvent, Input } from '@tarojs/components'
-import Taro, { showToast, useDidShow, switchTab } from '@tarojs/taro'
+import Taro, { showToast, useDidShow, switchTab, useDidHide } from '@tarojs/taro'
 
 import useLock from '@/hooks/useLock'
 
@@ -16,6 +16,7 @@ const TYPE = {
 }
 
 const Add = (props) => {
+
   const [type, setType] = useState<'expend' | 'income' | 'none'>(TYPE['支出'] as 'expend');
   const [amountType, setAmountType] = useState<string>('');
   const [amount, setAmount] = useState<string>('');
@@ -31,8 +32,36 @@ const Add = (props) => {
   }, [])
 
   useDidShow(() => {
-    clearData()
+    if (Taro.getStorageSync('recordId')) {
+      dataReBack()
+    } else {
+      clearData()
+    }
   })
+
+  useDidHide(() => {
+    Taro.removeStorageSync('recordId')
+  })
+
+  const dataReBack = useCallback(() => {
+    Taro.cloud.callFunction({
+      name: 'getRecordDetail',
+      data: {
+        recordId: Taro.getStorageSync('recordId')
+      }
+    }).then((res: any) => {
+      const { type, amountType, amount, remark } = res?.result?.data
+      setType(type)
+      setAmountType(amountType)
+      setAmount(amount.toString())
+      inputRef.current.value = remark
+    }).catch(() => {
+      showToast({
+        title: '获取数据失败',
+        icon: 'none'
+      })
+    })
+  }, [])
 
   const keyBoardClick = useCallback((value) => {
     if (!value) return
@@ -70,30 +99,70 @@ const Add = (props) => {
     setAmount(val => val + value)
   }, [amount, inputRef.current?.value])
 
-  const addConfirm = useCallback(() => {
-    if (isLock()) return
-    setLock(true)
+  const preValidate = useCallback(() => {
     if (amount === '') {
       showToast({
         title: '请输入金额',
         icon: 'none'
       })
-      return
+      return false
     }
     if (+amount === 0) {
       showToast({
         title: '金额不能为0',
         icon: 'none'
       })
-      return
+      return false
     }
     if (amountType === '') {
       showToast({
         title: '请选择类型',
         icon: 'none'
       })
+      return false
+    }
+    return true
+  }, [amount, amountType])
+
+  const updateRecord = useCallback(() => {
+    Taro.cloud.callFunction({
+      name: 'updateRecord',
+      data: {
+        recordId: Taro.getStorageSync('recordId'),
+        type,
+        amountType,
+        amount: +amount,
+        remark: inputRef.current?.value
+      }
+    }).then(() => {
+      clearData()
+      switchTab({
+        url: '/pages/index/index'
+      })
+    }).catch(() => {
+      showToast({
+        title: '更新失败',
+        icon: 'none'
+      })
+    }).finally(() => {
+      setLock(false)
+    })
+  }, [amount, amountType, type, inputRef.current?.value])
+
+  const addConfirm = useCallback(() => {
+    if (isLock()) return
+    setLock(true)
+
+    if (!preValidate()) {
+      setLock(false)
       return
     }
+
+    if (Taro.getStorageSync('recordId')) {
+      updateRecord()
+      return
+    }
+
     Taro.cloud.callFunction({
       name: 'addOneRecord',
       data: {

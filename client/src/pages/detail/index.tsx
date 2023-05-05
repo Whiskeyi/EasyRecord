@@ -1,5 +1,5 @@
 import { View } from "@tarojs/components";
-import Taro, { useRouter, showLoading, hideLoading } from "@tarojs/taro";
+import Taro, { useRouter, showLoading, hideLoading, switchTab } from "@tarojs/taro";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 
@@ -58,6 +58,12 @@ const CardDetail = () => {
             <View className="item-title">记录时间</View>
             <View className="item-content">{dayjs(recordDetail?.recordTime).format('YYYY年M月D日 HH:mm')}</View>
           </View>
+          {recordDetail?.updateTime ? (
+            <View className="card-item">
+              <View className="item-title">更新时间</View>
+              <View className="item-content">{dayjs(recordDetail?.updateTime).format('YYYY-MM-DD HH:mm:ss')}</View>
+            </View>
+          ) : null}
           {recordDetail?.remark ? (
             <View className="card-item">
               <View className="item-title">备注</View>
@@ -74,7 +80,17 @@ const CardDetail = () => {
           >
             删除
           </View>
-          <View className="btn edit">编辑</View>
+          <View
+            className="btn edit"
+            onClick={() => {
+              switchTab({
+                url: '/pages/add/index'
+              })
+              Taro.setStorageSync('recordId', recordId)
+            }}
+          >
+            编辑
+          </View>
         </View>
       </View>
     </View>

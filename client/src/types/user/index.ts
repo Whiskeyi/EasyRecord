@@ -28,4 +28,6 @@ export interface RecordDetail {
   type: 'income' | 'expend' | 'none';
   /** 记录用户id */
   openid: string;
+  /** 更新时间 */
+  updateTime: string;
 }
