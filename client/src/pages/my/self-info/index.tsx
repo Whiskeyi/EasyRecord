@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect } from "react";
-import Taro from "@tarojs/taro";
+import { useState, useCallback, useEffect, useRef } from "react";
+import Taro, { navigateBack } from "@tarojs/taro";
 import { View } from "@tarojs/components"
 import { AtForm, AtButton, AtInput, AtImagePicker } from 'taro-ui'
 import dayjs from "dayjs";
@@ -11,21 +11,32 @@ import './index.less'
 
 const SelfInfo = () => {
   const [userInfo, setUserInfo] = useState<UserInfo>();
-  const [files, setFiles] = useState<any>([]);
+  const [files, setFiles] = useState<any>([{
+    url: 'https://cloud.zhuchj.com/default-avatar.png'
+  }]);
+  const timeoutRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
     Taro.cloud.callFunction({
       name: 'getUserInfo',
     }).then((res: any) => {
       setUserInfo(res.result);
-      setFiles([{
-        url: res.result.avatar
-      }])
+      if (res.result?.avatar) {
+        setFiles([{
+          url: res.result?.avatar
+        }])
+      }
     })
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
   }, [])
 
-  const handleSubmit = useCallback(() => {
-    Taro.cloud.callFunction({
+  const handleSubmit = useCallback(async () => {
+    await Taro.cloud.callFunction({
       name: 'updateUserInfo',
       data: {
         username: userInfo?.username,
@@ -39,22 +50,25 @@ const SelfInfo = () => {
         icon: 'success',
         duration: 2000
       })
+      timeoutRef.current = setTimeout(() => {
+        navigateBack();
+      }, 2000)
     })
-  }, [userInfo])
+  }, [userInfo, files])
 
   return (
     <View className="self-info-container">
       <AtForm>
         <FormTitle title="头像" />
         <AtImagePicker
-          showAddBtn={files.length < 1}
+          showAddBtn={files?.length < 1}
           files={files}
-          onChange={(files) => {
-            if (files.length === 0) {
+          onChange={async (files) => {
+            if (files?.length === 0) {
               setFiles(files)
               return
             }
-            Taro.cloud.uploadFile({
+            await Taro.cloud.uploadFile({
               cloudPath: `avatar/${userInfo?.openid}/${dayjs().valueOf()}.png`,
               filePath: files[0]?.url,
             }).then((res: any) => {
