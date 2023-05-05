@@ -11,6 +11,7 @@ export default defineAppConfig({
     'pages/my/feedback/index',
     'pages/my/message-notice/index',
     'pages/my/self-info/index',
+    'pages/my/types-manage/index',
     // 登录
     'pages/login/index',
   ],

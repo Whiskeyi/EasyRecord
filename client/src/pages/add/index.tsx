@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef } from 'react'
 import dayjs from 'dayjs'
 import { View, ITouchEvent, Input } from '@tarojs/components'
-import Taro, { showToast, useDidShow, switchTab, useDidHide } from '@tarojs/taro'
+import Taro, { showToast, useDidShow, switchTab, useDidHide, navigateTo } from '@tarojs/taro'
 
 import useLock from '@/hooks/useLock'
 
@@ -239,6 +239,17 @@ const Add = (props) => {
                 </View>
               </View>
             ))}
+            <View className="type-item">
+              <View
+                className="type-text"
+                onClick={() => {
+                  navigateTo({
+                    url: '/pages/my/types-manage/index'
+                  })
+                }}>
+                管理
+              </View>
+            </View>
           </View>
           <View className="input-container">
             <View className="input-prefix">备注：</View>

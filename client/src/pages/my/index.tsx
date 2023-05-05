@@ -107,7 +107,12 @@ const My = () => {
             }
           },
           {
-            title: '分类管理'
+            title: '分类管理',
+            onClick: () => {
+              navigateTo({
+                url: '/pages/my/types-manage/index'
+              })
+            }
           },
           {
             title: '消息推送',

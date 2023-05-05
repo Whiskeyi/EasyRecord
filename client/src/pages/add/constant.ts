@@ -19,7 +19,7 @@ export const SELECT_TYPES = {
       name: '交通',
     },
     {
-      name: '生活日用'
+      name: '生活日用',
     },
     {
       name: '人情社交',
@@ -28,7 +28,7 @@ export const SELECT_TYPES = {
       name: '宠物',
     },
     {
-      name: '养娃'
+      name: '养娃',
     },
     {
       name: '运动健身',
@@ -37,7 +37,7 @@ export const SELECT_TYPES = {
       name: '生活服务',
     },
     {
-      name: '买菜'
+      name: '买菜',
     },
     {
       name: '住房',
@@ -52,7 +52,7 @@ export const SELECT_TYPES = {
       name: '网络虚拟',
     },
     {
-      name: '烟酒'
+      name: '烟酒',
     },
     {
       name: '医疗保健',
@@ -67,7 +67,7 @@ export const SELECT_TYPES = {
       name: '酒店旅行',
     },
     {
-      name: '转账'
+      name: '转账',
     },
     {
       name: '公益',
@@ -79,11 +79,11 @@ export const SELECT_TYPES = {
       name: '数码',
     },
     {
-      name: '奶茶'
+      name: '奶茶',
     },
     {
-      name: '其它'
-    }
+      name: '其它',
+    },
   ],
   income: [
     {
@@ -105,7 +105,7 @@ export const SELECT_TYPES = {
       name: '报销',
     },
     {
-      name: '转账'
+      name: '转账',
     },
     {
       name: '生意',
@@ -117,13 +117,13 @@ export const SELECT_TYPES = {
       name: '生活费',
     },
     {
-      name: '中奖'
+      name: '中奖',
     },
     {
-      name: '保险理赔'
+      name: '保险理赔',
     },
     {
-      name: '其它'
+      name: '其它',
     }
   ],
   none: [
