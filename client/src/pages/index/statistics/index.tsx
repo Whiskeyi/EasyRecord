@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
-import { View } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
 import { Picker } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { AtProgress } from 'taro-ui'
 import dayjs from 'dayjs'
+
+import Nodata from '@/assets/img/no-data.png'
 
 import './index.less'
 
@@ -20,7 +22,6 @@ const Statistics = () => {
         date: selectDate
       }
     }).then((res: any) => {
-      console.log(res)
       setStatisticsList(res.result)
     })
   }, [selectType, selectDate])
@@ -84,7 +85,7 @@ const Statistics = () => {
           {selectType === '支出' ? '支出' : '收入'}类别排名
         </View>
         <View className="type-items">
-          {statisticsList?.typeList?.map((item: any, index: number) => {
+          {statisticsList?.typeList.length ? statisticsList?.typeList?.map((item: any, index: number) => {
             return (
               <View className="type-item" key={index}>
                 <View className="item-left">
@@ -96,15 +97,15 @@ const Statistics = () => {
                   <View className="right-title">¥{item.total}</View>
                 </View>
               </View>)
-          })}
+          }) : <Image className="no-data" src={Nodata} />}
         </View>
       </View>
       <View className="sta-list">
         <View className="sta-list-title">
-          {selectType === '支出' ? '支出' : '收入'}记录排名
+          {selectType === '支出' ? '支出' : '收入'}明细排名
         </View>
         <View className="sta-list-items">
-          {statisticsList?.recordList?.map((item: any, index: number) => {
+          {statisticsList?.recordList?.length ? statisticsList?.recordList?.map((item: any, index: number) => {
             return (
               <View className="sta-list-item" key={index} onClick={() => {
                 Taro.navigateTo({
@@ -129,7 +130,7 @@ const Statistics = () => {
                 </View>
               </View>
             )
-          })}
+          }) : <Image className="no-data" src={Nodata} />}
         </View>
       </View>
     </View>
