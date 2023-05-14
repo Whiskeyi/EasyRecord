@@ -14,6 +14,7 @@ exports.main = async (event, context) => {
   const autoNotice = event.autoNotice
   const dayNotice = event.dayNotice
   const weekNotice = event.weekNotice
+  const monthNotice = event.monthNotice
 
   // 如何此用户在message_notice集合中不存在，则创建一条记录
   const res1 = await db.collection('message_notice').where({
@@ -26,7 +27,8 @@ exports.main = async (event, context) => {
         messNotice:  false,
         autoNotice: false,
         dayNotice: false,
-        weekNotice: false
+        weekNotice: false,
+        monthNotice: false
       }
     })
   }
@@ -39,13 +41,14 @@ exports.main = async (event, context) => {
         messNotice: false,
         autoNotice: false,
         dayNotice: false,
-        weekNotice: false
+        weekNotice: false,
+        monthNotice: false
       }
     })
     return
   }
 
-  if (!messNotice && (autoNotice || dayNotice || weekNotice)) {
+  if (!messNotice && (autoNotice || dayNotice || weekNotice || monthNotice)) {
     return
   }
 
@@ -56,7 +59,8 @@ exports.main = async (event, context) => {
       messNotice: messNotice || false,
       autoNotice: autoNotice || false,
       dayNotice: dayNotice || false,
-      weekNotice: weekNotice || false
+      weekNotice: weekNotice || false,
+      monthNotice: monthNotice || false
     }
   })
 
@@ -68,6 +72,7 @@ exports.main = async (event, context) => {
     messNotice: rz.data[0].messNotice,
     autoNotice: rz.data[0].autoNotice,
     dayNotice: rz.data[0].dayNotice,
-    weekNotice: rz.data[0].weekNotice
+    weekNotice: rz.data[0].weekNotice,
+    monthNotice: rz.data[0].monthNotice
   }
 }
