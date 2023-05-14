@@ -11,6 +11,7 @@ const MessageNotice = () => {
     autoNotice: boolean;
     dayNotice: boolean;
     weekNotice: boolean;
+    monthNotice: boolean;
   }>();
 
   useEffect(() => {
@@ -53,6 +54,11 @@ const MessageNotice = () => {
       <AtSwitch disabled={!noticeStatus?.messNotice} checked={noticeStatus?.weekNotice} title="每周推送" onChange={() => {
         changeMessNotice({
           weekNotice: !noticeStatus?.weekNotice
+        });
+      }} />
+      <AtSwitch disabled={!noticeStatus?.messNotice} checked={noticeStatus?.monthNotice} title="每月推送" onChange={() => {
+        changeMessNotice({
+          weekNotice: !noticeStatus?.monthNotice
         });
       }} />
     </AtForm>
