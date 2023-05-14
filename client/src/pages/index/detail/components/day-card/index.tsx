@@ -29,7 +29,9 @@ const DayCard = ({ recordInfo }) => {
         })
       }}>
         <View className="item-left">
-          <Image className="item-img" src="https://cloud.zhuchj.com/avatar.jpg" />
+          <View className={`item-img ${type}`}>
+            <View className="item-img-text">{amountType.slice(0, 1)}</View>
+          </View>
           <View className="item-info">
             <View className="info-title">{amountType}</View>
             <View className="info-detail">

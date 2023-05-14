@@ -111,15 +111,35 @@
     .item-center {
       display: flex;
       flex-direction: row;
+      align-items: center;
 
       .center-img {
-        width: 80px;
-        height: 80px;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-image: url('https://cloud.zhuchj.com/avatar.jpg');
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 68px;
+        height: 68px;
         margin-right: 24px;
         border-radius: 50px;
+        background-color: @primary-color;
+
+        &.expend {
+          background-color: @primary-color;
+        }
+
+        &.income {
+          background-color: @primary-color-2;
+        }
+
+        &.none {
+          background-color: @primary-color-3;
+        }
+
+        .img-text {
+          font-weight: bold;
+          font-size: 30px;
+          color: #fff;
+        }
       }
 
       .center-right {

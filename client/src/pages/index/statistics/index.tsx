@@ -115,7 +115,9 @@ const Statistics = () => {
                 <View className="item-left">
                   <View className="item-num">{index + 1}</View>
                   <View className="item-center">
-                    <View className="center-img" />
+                    <View className={`center-img  ${item.type}`}>
+                      <View className="img-text">{item.amountType.slice(0, 1)}</View>
+                    </View>
                     <View className="center-right">
                       <View className="right-title">{item.amountType}</View>
                       <View className="right-remark">{item.remark}</View>
