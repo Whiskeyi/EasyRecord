@@ -13,6 +13,8 @@ export interface UserInfo {
   continueRecord?: number;
   /** openid */
   openid?: string;
+  /** 联系方式 */
+  tel?: string;
 }
 
 export interface RecordDetail {

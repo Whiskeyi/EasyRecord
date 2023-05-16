@@ -10,7 +10,7 @@ exports.main = async (event, context) => {
   // 更新用户信息到user集合中
   const db = cloud.database()
   const _ = db.command
-  const { username, intro, avatar } = event
+  const { username, intro, avatar, tel } = event
 
   await db.collection('user').where({
     openid: wxContext.OPENID
@@ -19,6 +19,7 @@ exports.main = async (event, context) => {
       username,
       intro,
       avatar,
+      tel,
       updateTime: new Date()
     }
   })

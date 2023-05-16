@@ -11,12 +11,13 @@ exports.main = async (event, context) => {
   const db = cloud.database()
   const _ = db.command
   const feedback = db.collection('feedback')
-  const { images, content } = event
+  const { images, content, type } = event
   const result = await feedback.add({
     data: {
       openid: wxContext.OPENID,
       images,
       content,
+      type,
       createTime: new Date(),
     }
   })

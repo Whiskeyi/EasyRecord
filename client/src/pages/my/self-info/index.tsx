@@ -41,7 +41,8 @@ const SelfInfo = () => {
       data: {
         username: userInfo?.username,
         intro: userInfo?.intro,
-        avatar: files[0]?.url
+        avatar: files[0]?.url,
+        tel: userInfo?.tel
       }
     }).then((res: any) => {
       setUserInfo(res.result);
@@ -105,6 +106,19 @@ const SelfInfo = () => {
             setUserInfo({
               ...userInfo,
               intro: val as string
+            })
+          }}
+        />
+        <FormTitle title="联系方式" />
+        <AtInput
+          name="value"
+          type="text"
+          placeholder="请输入"
+          value={userInfo?.tel}
+          onChange={(val) => {
+            setUserInfo({
+              ...userInfo,
+              tel: val as string
             })
           }}
         />
