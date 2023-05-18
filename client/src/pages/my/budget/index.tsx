@@ -9,7 +9,7 @@ import './index.less'
 import Taro, { useDidShow } from "@tarojs/taro"
 
 const Budget = () => {
-  const budgetInputRef = useRef(null);
+  const budgetRef = useRef();
   const [isLock, setLock] = useLock(false);
   const [currentExpend, setCurrentExpend] = useState();
   const [budget, setBudget] = useState();
@@ -20,11 +20,21 @@ const Budget = () => {
     }).then((res: any) => {
       setCurrentExpend(res.result.expend)
       setBudget(res.result.budget || '')
+      budgetRef.current = res.result.budget
     })
   })
 
   const handleSave = () => {
     if (!isLock()) {
+      if (budgetRef.current === budget) {
+        Taro.showToast({
+          title: '预算未改变',
+          icon: 'none',
+          duration: 2000
+        })
+        return
+      }
+      setLock(true)
       Taro.cloud.callFunction({
         name: 'updateCurrentBudget',
         data: {
@@ -67,7 +77,6 @@ const Budget = () => {
           <AtInput
            type="number"
             name="budget"
-            ref={budgetInputRef}
             placeholder="请输入每月预算"
             value={budget}
             onChange={(value: any) => {
@@ -79,6 +88,7 @@ const Budget = () => {
         className="budget-btn"
         onClick={() => {
           handleSave()
+          budgetRef.current = budget
         }}
       >
         保存
