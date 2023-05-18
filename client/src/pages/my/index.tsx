@@ -115,6 +115,14 @@ const My = () => {
             }
           },
           {
+            title: '预算管理',
+            onClick: () => {
+              navigateTo({
+                url: '/pages/my/budget/index'
+              })
+            }
+          },
+          {
             title: '消息推送',
             onClick: () => {
               navigateTo({
