@@ -47,7 +47,7 @@ const Feedback = () => {
       return false
     }
     return true
-  }, [value])
+  }, [value, type])
 
   const handleSubmit = useCallback(async () => {
     if (!checkSubmit()) {
@@ -97,7 +97,9 @@ const Feedback = () => {
         mode="selector"
         range={['功能建议', '界面优化', '错误修复', '其他']}
         value={type}
-        onChange={(e) => setType(typeMap[e.detail.value])}
+        onChange={(e) => {
+          setType(typeMap[e.detail.value])
+        }}
       >
         <AtList>
           <AtListItem title="反馈类型"  extraText={type} />

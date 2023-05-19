@@ -19,7 +19,6 @@ const statusColorMap = {
 
 
 const FeedbackList = () => {
-
   const [feedbackList, setFeedbackList] = useState([])
 
   useDidShow(() => {
