@@ -8,7 +8,7 @@ exports.main = async (event, context) => {
   const db = cloud.database()
 
   const { OPENID } = wxContext
-  const { recordTime, amount, type, amountType, remark } = event
+  const { recordTime, amount, type, amountType, remark, image } = event
 
   if (!recordTime || !amount || !type || !amountType) {
     return {
@@ -76,6 +76,7 @@ exports.main = async (event, context) => {
       amountType,
       remark,
       createTime: db.serverDate(),
+      image,
     },
   })
 

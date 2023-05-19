@@ -34,4 +34,6 @@ export interface RecordDetail {
   openid: string;
   /** 更新时间 */
   updateTime: string;
+  /** 图片 */
+  image?: string;
 }

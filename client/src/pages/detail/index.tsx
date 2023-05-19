@@ -1,4 +1,4 @@
-import { View } from "@tarojs/components";
+import { View, Image } from "@tarojs/components";
 import Taro, { useRouter, showLoading, hideLoading, switchTab } from "@tarojs/taro";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
@@ -68,6 +68,16 @@ const CardDetail = () => {
             <View className="card-item">
               <View className="item-title">备注</View>
               <View className="item-content">{recordDetail?.remark}</View>
+            </View>
+          ) : null}
+          {recordDetail?.image ? (
+            <View className="card-item">
+              <View className="item-title">图片</View>
+              <Image className="item-image" src={recordDetail?.image} onClick={() => {
+                Taro.previewImage({
+                  urls: [recordDetail.image!]
+                })
+              }} />
             </View>
           ) : null}
         </View>

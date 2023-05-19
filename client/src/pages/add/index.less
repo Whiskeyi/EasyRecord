@@ -47,6 +47,7 @@
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+      align-items: center;
     }
 
     .add-button-group {
@@ -86,6 +87,38 @@
       font-size: 28px;
       background-color: #eee;
       border-radius: 6px;
+    }
+
+    .top-right {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .btn-clear {
+      display: flex;
+      align-items: center;
+      font-size: 26px;
+      padding: 6px 12px;
+      color: gray;
+      background-color: #eee;
+      border-radius: 6px;
+      margin-left: 12px;
+
+      &.expend {
+        color: #fff;
+        background-color: @primary-color;
+      }
+
+      &.income {
+        color: #fff;
+        background-color: @primary-color-2;
+      }
+
+      &.none {
+        color: #fff;
+        background-color: @primary-color-3;
+      }
     }
 
     .top-input-content {
@@ -161,6 +194,28 @@
         flex: 1;
         color: #999;
         font-size: 30px;
+      }
+
+      .input-img {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .img-show {
+          width: 50px;
+          height: 50px;
+        }
+
+        .img-clear {
+          margin-left: 12px;
+          width: 36px;
+          height: 36px;
+        }
+      }
+
+      .input-imgs {
+        width: 42px;
+        height: 42px;
       }
     }
 

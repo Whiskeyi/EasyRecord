@@ -1,6 +1,6 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import dayjs from 'dayjs'
-import { View, ITouchEvent, Input } from '@tarojs/components'
+import { View, ITouchEvent, Input, Image } from '@tarojs/components'
 import Taro, { showToast, useDidShow, switchTab, useDidHide, navigateTo } from '@tarojs/taro'
 
 import useLock from '@/hooks/useLock'
@@ -21,6 +21,7 @@ const Add = (props) => {
   const [amountType, setAmountType] = useState<string>('');
   const [amount, setAmount] = useState<string>('');
   const [isLock, setLock] = useLock(false);
+  const [uploadImg, setUploadImg] = useState('');
 
   const inputRef = useRef<any>()
 
@@ -29,19 +30,22 @@ const Add = (props) => {
     setAmount('')
     setAmountType('')
     inputRef.current.value = ''
+    setUploadImg('')
   }, [])
 
   useDidShow(() => {
     if (Taro.getStorageSync('recordId')) {
       dataReBack()
-    } else {
-      clearData()
     }
   })
 
   useDidHide(() => {
     Taro.removeStorageSync('recordId')
   })
+
+  useEffect(() => {
+    clearData()
+  }, [])
 
   const dataReBack = useCallback(() => {
     Taro.cloud.callFunction({
@@ -50,10 +54,11 @@ const Add = (props) => {
         recordId: Taro.getStorageSync('recordId')
       }
     }).then((res: any) => {
-      const { type, amountType, amount, remark } = res?.result?.data
+      const { type, amountType, amount, remark, image } = res?.result?.data
       setType(type)
       setAmountType(amountType)
       setAmount(amount.toString())
+      setUploadImg(image)
       inputRef.current.value = remark
     }).catch(() => {
       showToast({
@@ -170,10 +175,12 @@ const Add = (props) => {
         amountType,
         amount: +amount,
         recordTime: dayjs().valueOf(),
-        remark: inputRef.current?.value
+        remark: inputRef.current?.value,
+        image: uploadImg
       }
     }).then(() => {
       clearData()
+      setUploadImg('')
       switchTab({
         url: '/pages/index/index'
       })
@@ -186,7 +193,7 @@ const Add = (props) => {
     }).finally(() => {
       setLock(false)
     })
-  }, [amount, amountType, type, inputRef.current?.value])
+  }, [amount, amountType, type, inputRef.current?.value, uploadImg])
 
   return (
     <View className="add-container">
@@ -209,8 +216,18 @@ const Add = (props) => {
                 </View>
               ))}
             </View>
-            <View className="add-date-picker">
-              {dayjs().format('M月DD日')}
+            <View className="top-right">
+              <View className="add-date-picker">
+                {dayjs().format('M月DD日')}
+              </View>
+              <View
+                className={`btn-clear ${type}`}
+                onClick={() => {
+                  clearData()
+                }}
+              >
+                清空
+              </View>
             </View>
           </View>
           <View className="top-input-content">
@@ -254,6 +271,46 @@ const Add = (props) => {
           <View className="input-container">
             <View className="input-prefix">备注：</View>
             <Input className="middle-input" ref={inputRef} />
+            {uploadImg ?
+              (
+                <View className="input-img">
+                  <Image
+                    className="img-show"
+                    src={uploadImg}
+                    onClick={() => {
+                      Taro.previewImage({
+                        urls: [uploadImg]
+                      })
+                    }}
+                  />
+                  <Image className="img-clear" src="https://cloud.zhuchj.com/clear-rectangle.png" onClick={() => {
+                    setUploadImg('')
+                  }} />
+                </View>
+              )
+              :
+              <Image
+                className="input-imgs"
+                src="https://cloud.zhuchj.com/imgs.png"
+                onClick={() => {
+                  setLock(true)
+                  Taro.chooseImage({
+                    count: 1,
+                  }).then(async (res) => {
+                    await Taro.cloud.uploadFile({
+                      cloudPath: `record/${dayjs().valueOf()}.png`,
+                      filePath: res.tempFilePaths[0],
+                    }).then((res: any) => {
+                      Taro.cloud.getTempFileURL({
+                        fileList: [res.fileID]
+                      }).then((res: any) => {
+                        setUploadImg(res.fileList[0].tempFileURL)
+                      })
+                    })
+                  }).finally(() => {
+                    setLock(false)
+                  })
+                }} />}
           </View>
         </View>
         <View className="add-content-bottom">
