@@ -137,7 +137,8 @@ const Add = (props) => {
         type,
         amountType,
         amount: +amount,
-        remark: inputRef.current?.value
+        remark: inputRef.current?.value,
+        image: uploadImg
       }
     }).then(() => {
       clearData()

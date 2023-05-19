@@ -10,7 +10,7 @@ exports.main = async (event, context) => {
   const _ = db.command
 
   // 获得传参更新对应recordId在amount_records集合中的数据
-  const { amount, type, amountType, remark, recordId } = event
+  const { amount, type, amountType, remark, recordId, image } = event
   const collection = db.collection('amount_records')
 
   // 更新集合数据
@@ -20,7 +20,8 @@ exports.main = async (event, context) => {
       type,
       amountType,
       remark,
-      updateTime: new Date()
+      updateTime: new Date(),
+      image
     }
   })
 
