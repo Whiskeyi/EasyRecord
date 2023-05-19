@@ -19,6 +19,7 @@ exports.main = async (event, context) => {
       content,
       type,
       createTime: new Date(),
+      status: 1
     }
   })
 
