@@ -1,3 +1,5 @@
+@import '~@/styles/variables.less';
+
 .my-container {
   width: 100%;
   min-height: 100vh;
@@ -89,6 +91,25 @@
       height: 100px;
       padding: 10px 60px;
       background-color: #fff;
+
+      .config-item-left {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .config-item-tag {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 20px;
+        padding: 0 8px;
+        height: 90%;
+        background-color: @primary-color;
+        border-radius: 6px;
+        color: #fff;
+        font-size: 24px;
+      }
 
       .config-item-title {
         font-size: 32px;

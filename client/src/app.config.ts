@@ -9,6 +9,7 @@ export default defineAppConfig({
     'pages/my/index',
     'pages/my/about-us/index',
     'pages/my/feedback/index',
+    'pages/my/feedback/list/index',
     'pages/my/message-notice/index',
     'pages/my/self-info/index',
     'pages/my/types-manage/index',

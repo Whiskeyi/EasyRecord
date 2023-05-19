@@ -48,6 +48,7 @@ const My = () => {
 
   const renderConfigItems = (config: Array<{
     title: string;
+    tag?: string;
     onClick?: Function;
   }>) => {
     return (
@@ -61,7 +62,10 @@ const My = () => {
                 typeof item.onClick === 'function' && item.onClick()
               }}
             >
-              <View className="config-item-title">{item.title}</View>
+              <View className="config-item-left">
+                <View className="config-item-title">{item.title}</View>
+                {item?.tag ? <View className="config-item-tag">{item.tag}</View> : null}
+              </View>
               <View className="config-item-arrow"></View>
             </View>
           )
@@ -124,6 +128,7 @@ const My = () => {
           },
           {
             title: '消息推送',
+            tag: 'beta',
             onClick: () => {
               navigateTo({
                 url: '/pages/my/message-notice/index'
@@ -134,7 +139,7 @@ const My = () => {
             title: '意见反馈',
             onClick: () => {
               navigateTo({
-                url: '/pages/my/feedback/index'
+                url: '/pages/my/feedback/list/index'
               })
             }
           },
