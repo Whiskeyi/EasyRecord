@@ -88,7 +88,7 @@ const Feedback = () => {
         Taro.navigateBack()
       }, 2000)
     })
-  }, [value])
+  }, [value, files, type, checkSubmit])
 
   return <View className="feedback-container">
     <AtForm>
